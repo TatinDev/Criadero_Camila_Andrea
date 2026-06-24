@@ -6,15 +6,17 @@ El objetivo del proyecto es centralizar la informacion critica del criadero, inc
 
 ## Estado actual
 
-Fecha de corte: 16 de junio de 2026.
+Fecha de corte: 24 de junio de 2026.
 
-El proyecto se encuentra actualmente en etapa de especificacion. Hasta esta fecha se ha trabajado en el levantamiento inicial de necesidades, alcance y casos de uso principales del sistema.
+El proyecto se encuentra actualmente en etapa de especificacion avanzada. Ya se completo una base funcional amplia para describir el sistema, sus modulos principales, pantallas esperadas, modelo de datos, reglas de negocio, endpoints API, permisos, arquitectura objetivo, estrategia de pruebas y trazabilidad.
 
 El archivo principal de trabajo es:
 
 - `especificacion_criadero_camila_andrea.md`
 
-## Trabajo realizado hasta la fecha
+## Historial de avances
+
+### Avance inicial - 16 de junio de 2026
 
 Se documento la idea base del sistema y se definio que sera una plataforma privada, sin acceso para clientes externos ni publico general. El acceso estara reservado a la propietaria, administradores invitados y personal interno autorizado.
 
@@ -39,32 +41,46 @@ Dentro de la especificacion ya se avanzaron las siguientes areas:
 - Casos de uso para genealogia.
 - Casos de uso para estados de caballos.
 
+### Avance de especificacion - 24 de junio de 2026
+
+Se amplio la especificacion del proyecto tomando como base el avance inicial del 16 de junio de 2026. En esta etapa se paso desde una definicion general de alcance y casos de uso hacia una especificacion funcional mas completa, preparada para revision antes de iniciar la implementacion.
+
+Respecto al avance anterior, se concreto lo siguiente:
+
+- Se completo la especificacion de pantallas principales del sistema.
+- Se agrego el modelo de datos base para los modulos principales.
+- Se definieron validaciones y reglas de negocio generales.
+- Se agrego la propuesta de endpoints API bajo `/api/v1`.
+- Se definieron estados iniciales por modulo.
+- Se agrego el modelo de permisos para usuarios internos.
+- Se documento una arquitectura objetivo para orientar la futura implementacion.
+- Se agregaron requisitos no funcionales.
+- Se definio una estrategia de pruebas.
+- Se agregaron criterios de aceptacion por modulo.
+- Se incorporo una matriz de trazabilidad.
+- Se definio un gate de cierre para determinar cuando la especificacion estara lista para pasar a desarrollo.
+
 ## Justificacion del avance
 
-La especificacion debia quedar lista durante esta etapa, pero se decidio desarrollarla paso a paso en conjunto con una IA para evitar omitir detalles importantes de la idea de proyecto.
+La especificacion se esta desarrollando paso a paso en conjunto con una IA para evitar omitir detalles importantes de la idea de proyecto.
 
 El sistema contempla varias areas operativas relacionadas entre si, por lo que avanzar de forma progresiva permite revisar mejor las necesidades reales del criadero antes de pasar a la generacion o implementacion del sistema.
 
-Por este motivo, la especificacion aun no se considera cerrada. Se completara durante los proximos dias, agregando las secciones pendientes y refinando las decisiones necesarias para iniciar la construccion con una base mas clara.
+Con el avance del 24 de junio de 2026, la especificacion ya cuenta con una base mucho mas completa. Aun puede recibir ajustes y refinamientos, pero ya existe una estructura suficiente para evaluar el alcance del MVP y preparar la siguiente etapa tecnica.
 
 ## Pendiente por completar
 
-Las siguientes secciones aun deben desarrollarse en la especificacion:
+Aunque la especificacion ya fue ampliada, todavia quedan tareas de revision antes de considerarla cerrada para implementacion:
 
-- Especificacion de pantallas.
-- Modelo de datos.
-- Validaciones y reglas de negocio.
-- Endpoints API.
-- Estados por modulo.
-- Modelo de permisos.
-- Arquitectura objetivo.
-- Requisitos no funcionales.
-- Estrategia de pruebas.
-- Trazabilidad.
-- Gate de cierre de especificacion.
+- Revisar consistencia final entre casos de uso, pantallas, modelo de datos y endpoints API.
+- Validar que las reglas de negocio reflejen correctamente las necesidades reales del criadero.
+- Confirmar decisiones pendientes o ajustables antes de iniciar desarrollo.
+- Revisar nombres tecnicos de entidades, estados y permisos.
+- Definir prioridades de implementacion para el MVP.
+- Preparar estructura tecnica inicial del proyecto cuando la especificacion sea aprobada.
 
 ## Proxima etapa
 
-La siguiente etapa sera completar las secciones pendientes de la especificacion, especialmente el modelo de datos, pantallas principales, reglas de negocio y permisos.
+La siguiente etapa sera revisar la especificacion completa, ajustar inconsistencias y validar que el MVP descrito sea construible con el alcance esperado.
 
 Una vez cerrada la especificacion, se podra continuar con la organizacion tecnica del proyecto y la implementacion del MVP.

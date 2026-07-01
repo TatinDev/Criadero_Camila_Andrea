@@ -59,3 +59,21 @@ Respecto al avance anterior, se concreto lo siguiente:
 - Se agregaron criterios de aceptacion por modulo.
 - Se incorporo una matriz de trazabilidad.
 - Se definio un gate de cierre para determinar cuando la especificacion estara lista para pasar a desarrollo.
+
+### Prototipo web local - 30 de junio de 2026
+
+Se genero una primera version web local del sistema a partir de la especificacion funcional del proyecto. Este avance transforma la documentacion previa en un prototipo ejecutable, permitiendo revisar de forma practica los modulos principales definidos para el MVP.
+
+Respecto al avance anterior, se concreto lo siguiente:
+
+- Se agrego una aplicacion web local en la carpeta `web/`.
+- Se implemento una interfaz inicial para operar el sistema de forma privada.
+- Se agrego un panel operativo con resumen de caballos, clientes, pensiones, pagos y actividad reciente.
+- Se implementaron modulos base para clientes, caballos, pensiones, pagos, vacunas, herrajes, documentos, administradores e invitaciones.
+- Se agrego un buscador global para consultar informacion del sistema.
+- Se incorporo una vista de genealogia para revisar relaciones familiares entre caballos.
+- Se agrego historial/auditoria para registrar acciones realizadas dentro del sistema.
+- Se implemento una API local simulada bajo `/api/v1`.
+- Se agrego persistencia local mediante `localStorage`.
+- Se incorporaron pruebas locales para validar reglas principales del sistema.
+- Se agrego documentacion tecnica dentro de `web/docs`.

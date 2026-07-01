@@ -1,0 +1,13 @@
+{
+  "project": "Criadero Camila Andrea",
+  "strategy": "App local sin llamadas externas, estado cacheado en localStorage, transacciones acotadas y pruebas Node sin dependencias descargadas.",
+  "token_optimization": [
+    "Reutilizacion de patron modular existente de la fabrica para reducir exploracion.",
+    "Dominio centralizado en MODULES para generar formularios CRUD sin duplicar UI por modulo.",
+    "API local deterministica con consumo estimado por transaccion.",
+    "Pruebas unitarias e integracion en una sola corrida Node."
+  ],
+  "runtime_external_calls": 0,
+  "estimated_cost_usd": "0.000000",
+  "usage_source": "local_estimate"
+}

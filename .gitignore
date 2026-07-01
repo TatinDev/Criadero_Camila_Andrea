@@ -1,0 +1,32 @@
+# Logs
+*.log
+web/server*.log
+
+# Factory/process metadata
+.fabrica/
+Aprendizaje.md
+HANDOFF.md
+work_order.json
+
+# Dependencies
+node_modules/
+web/node_modules/
+
+# Local runtime files
+.env
+.env.*
+!.env.example
+
+# Build and coverage outputs
+dist/
+build/
+coverage/
+web/dist/
+web/build/
+web/coverage/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

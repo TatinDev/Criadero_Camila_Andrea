@@ -1,0 +1,28 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Criadero Camila Andrea API local",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/auth/login": { "post": { "summary": "Login local de owner/admin" } },
+    "/auth/me": { "get": { "summary": "Usuario autenticado" } },
+    "/users": { "get": { "summary": "Listar administradores" }, "post": { "summary": "Crear administrador" } },
+    "/admin-invitations": { "get": { "summary": "Listar invitaciones" }, "post": { "summary": "Crear invitacion" } },
+    "/clients": { "get": { "summary": "Listar clientes" }, "post": { "summary": "Crear cliente" } },
+    "/horses": { "get": { "summary": "Listar caballos" }, "post": { "summary": "Crear caballo propio o pensionado" } },
+    "/boarding-stays": { "get": { "summary": "Listar pensiones" }, "post": { "summary": "Crear pension" } },
+    "/boarding-payments": { "get": { "summary": "Listar pagos" }, "post": { "summary": "Registrar pago" } },
+    "/vaccinations": { "get": { "summary": "Listar vacunas" }, "post": { "summary": "Registrar vacuna" } },
+    "/farrier-records": { "get": { "summary": "Listar herrajes" }, "post": { "summary": "Registrar herraje" } },
+    "/document-batches": { "get": { "summary": "Listar lotes documentales" }, "post": { "summary": "Crear lote documental" } },
+    "/search": { "get": { "summary": "Buscador global" } },
+    "/dashboard/summary": { "get": { "summary": "Resumen operativo" } },
+    "/audit-logs": { "get": { "summary": "Historial auditable filtrable" } }
+  }
+}

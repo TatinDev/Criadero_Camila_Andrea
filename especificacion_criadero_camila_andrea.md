@@ -773,9 +773,9 @@ Acciones:
 
 Validaciones:
 
-1. Correo valido.
-2. Contraseña obligatoria.
-3. Usuario activo.
+1. Correo debe tener formato valido.
+2. Contraseña es obligatoria.
+3. Usuario debe estar activo en el sistema.
 
 ## P-02 Aceptar invitacion / crear cuenta de administrador
 
@@ -816,11 +816,13 @@ Muestra:
 
 Acciones:
 
-1. Abrir buscador global.
+1. Abrir P-04 Buscador global.
 2. Abrir ficha de caballo.
 3. Abrir ficha de cliente.
 4. Abrir pension.
-5. Registrar nuevo caballo, cliente o pension.
+5. Abrir P-06 Modal crear caballo propio.
+6. Abrir P-09 Modal crear cliente.
+7. Abrir P-15 Modal crear pension.
 
 ## P-04 Buscador global
 
@@ -863,12 +865,14 @@ Muestra:
 
 Acciones:
 
-1. Registrar caballo propio.
-2. Abrir ficha.
-3. Editar.
-4. Cambiar estado.
+1. Abrir P-06 Modal crear caballo propio.
+2. Abrir P-07 Ficha.
+3. Abrir P-26 Modal editar.
+4. Abrir P-30 Modal cambiar estado.
 
-## P-06 Formulario de caballo propio
+## P-06 Modal crear caballo propio
+
+Modal que se abre desde P-05 Listado de caballos propios o P-03 Dashboard.
 
 Campos obligatorios:
 
@@ -899,7 +903,7 @@ Acciones:
 
 Validaciones:
 
-1. Campos obligatorios completos.
+1. Nombre, sexo, color y distintivos son obligatorios.
 2. Padre y madre pueden ser caballos registrados o nombres externos.
 
 ## P-07 Ficha de caballo propio
@@ -917,13 +921,13 @@ Muestra:
 
 Acciones:
 
-1. Editar caballo.
-2. Cambiar estado.
-3. Registrar vacuna.
-4. Registrar herraje.
-5. Subir documentos.
-6. Ver arbol genealogico.
-7. Consultar historial.
+1. Abrir P-26 Modal editar caballo propio.
+2. Abrir P-30 Modal cambiar estado.
+3. Abrir P-18 Modal registrar vacuna.
+4. Abrir P-23 Modal registrar herraje.
+5. Abrir P-25 Modal subir documentos.
+6. Navegar a P-19 Arbol genealogico.
+7. Navegar a P-20 Historial.
 
 ## P-08 Listado de clientes
 
@@ -945,12 +949,14 @@ Muestra:
 
 Acciones:
 
-1. Registrar cliente.
-2. Abrir ficha.
-3. Editar.
+1. Abrir P-09 Modal crear cliente.
+2. Abrir P-10 Ficha.
+3. Abrir P-27 Modal editar.
 4. Inactivar.
 
-## P-09 Formulario de cliente
+## P-09 Modal crear cliente
+
+Modal que se abre desde P-08 Listado de clientes o P-03 Dashboard.
 
 Campos:
 
@@ -969,9 +975,9 @@ Acciones:
 
 Validaciones:
 
-1. Nombre obligatorio.
-2. Apellido obligatorio.
-3. Numero de contacto obligatorio.
+1. Nombre es obligatorio.
+2. Apellido es obligatorio.
+3. Numero de contacto es obligatorio.
 
 ## P-10 Ficha de cliente
 
@@ -987,11 +993,11 @@ Muestra:
 
 Acciones:
 
-1. Editar cliente.
+1. Abrir P-27 Modal editar cliente.
 2. Inactivar cliente.
-3. Registrar caballo pensionado.
-4. Crear pension para caballo asociado.
-5. Subir documentos.
+3. Abrir P-12 Modal crear caballo pensionado.
+4. Abrir P-15 Modal crear pension para caballo asociado.
+5. Abrir P-25 Modal subir documentos.
 
 ## P-11 Listado de caballos pensionados
 
@@ -1015,12 +1021,14 @@ Muestra:
 
 Acciones:
 
-1. Registrar caballo pensionado.
-2. Abrir ficha.
-3. Editar.
-4. Cambiar estado.
+1. Abrir P-12 Modal crear caballo pensionado.
+2. Abrir P-13 Ficha.
+3. Abrir P-28 Modal editar.
+4. Abrir P-30 Modal cambiar estado.
 
-## P-12 Formulario de caballo pensionado
+## P-12 Modal crear caballo pensionado
+
+Modal que se abre desde P-11 Listado de caballos pensionados.
 
 Campos obligatorios:
 
@@ -1052,7 +1060,7 @@ Acciones:
 Validaciones:
 
 1. Debe existir un cliente seleccionado como dueño.
-2. Campos obligatorios completos.
+2. Nombre, sexo, color, distintivos y dueño son obligatorios.
 
 ## P-13 Ficha de caballo pensionado
 
@@ -1070,13 +1078,13 @@ Muestra:
 
 Acciones:
 
-1. Editar caballo.
-2. Cambiar estado.
-3. Crear pension o estadia.
-4. Abrir pension.
-5. Registrar vacuna.
-6. Registrar herraje.
-7. Subir documentos.
+1. Abrir P-28 Modal editar caballo pensionado.
+2. Abrir P-30 Modal cambiar estado.
+3. Abrir P-15 Modal crear pension o estadia.
+4. Abrir pension existente (navega a P-14).
+5. Abrir P-18 Modal registrar vacuna.
+6. Abrir P-23 Modal registrar herraje.
+7. Abrir P-25 Modal subir documentos.
 8. Consultar historial.
 
 ## P-14 Ficha de pension/estadia
@@ -1100,22 +1108,86 @@ Campos:
 
 Acciones:
 
-1. Editar pension.
-2. Finalizar pension.
+1. Abrir P-16 Modal editar pension.
+2. Abrir P-31 Modal finalizar pension.
 3. Anular pension.
-4. Registrar pago.
-5. Subir documentos.
+4. Abrir P-17 Modal registrar pago.
+5. Abrir P-25 Modal subir documentos.
 6. Ver pagos.
 7. Ver historial.
 
 Validaciones:
 
-1. Fecha de inicio obligatoria.
-2. Tipo de pension obligatorio.
-3. Estado del acuerdo obligatorio.
-4. Costo Pension obligatorio.
+1. Fecha de inicio es obligatoria.
+2. Tipo de pension es obligatorio.
+3. Estado del acuerdo es obligatorio.
+4. Costo Pension es obligatorio.
 
-## P-15 Pagos de estadia
+## P-15 Modal crear pension/estadia
+
+Modal que se abre desde P-13 Ficha de caballo pensionado o P-14 Ficha de pension/estadia.
+
+Campos:
+
+1. Fecha de inicio.
+2. Fecha de salida estimada.
+3. Tipo de pension.
+4. Estado inicial del acuerdo.
+5. Costo Pension.
+6. Fardos acordados por mes.
+7. Avena acordada por mes.
+8. Otros insumos.
+9. Notas de cuidado.
+10. Documentos o fotos de llegada.
+
+Acciones:
+
+1. Guardar.
+2. Cancelar.
+3. Subir documentos.
+
+Validaciones:
+
+1. Fecha de inicio es obligatoria.
+2. Tipo de pension es obligatorio.
+3. Estado del acuerdo es obligatorio.
+4. Costo Pension es obligatorio.
+5. Si tipo de pension es Otro, debe ingresarse descripcion.
+
+## P-16 Modal editar pension/estadia
+
+Modal que se abre desde P-14 Ficha de pension/estadia al seleccionar Editar.
+
+Campos:
+
+1. Fecha de inicio.
+2. Fecha de salida estimada.
+3. Tipo de pension.
+4. Estado del acuerdo.
+5. Costo Pension.
+6. Fardos acordados por mes.
+7. Avena acordada por mes.
+8. Otros insumos.
+9. Notas de cuidado.
+10. Documentos o fotos.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+3. Subir documentos.
+
+Validaciones:
+
+1. Fecha de inicio es obligatoria.
+2. Tipo de pension es obligatorio.
+3. Estado del acuerdo es obligatorio.
+4. Costo Pension es obligatorio.
+5. Si cambia el costo, no altera pagos ya registrados.
+
+## P-17 Modal registrar pago de estadia
+
+Modal que se abre desde P-14 Ficha de pension/estadia.
 
 Campos:
 
@@ -1128,20 +1200,21 @@ Campos:
 
 Acciones:
 
-1. Registrar pago.
-2. Editar pago.
-3. Anular pago.
-4. Ver comprobante.
-5. Descargar comprobante.
+1. Guardar.
+2. Cancelar.
+3. Subir comprobante.
 
 Validaciones:
 
-1. Fecha de pago obligatoria.
-2. Al menos un mes pagado obligatorio.
-3. Medio de pago obligatorio.
-4. Advertir si el mes ya fue pagado en la misma pension.
+1. Fecha de pago es obligatoria.
+2. Al menos un mes pagado es obligatorio.
+3. Medio de pago es obligatorio.
+4. Monto pagado es obligatorio.
+5. Advertir si el mes ya fue pagado en la misma pension.
 
-## P-16 Vacunas
+## P-18 Modal registrar vacuna
+
+Modal que se abre desde P-07 Ficha de caballo propio o P-13 Ficha de caballo pensionado.
 
 Campos:
 
@@ -1153,64 +1226,15 @@ Campos:
 
 Acciones:
 
-1. Registrar vacuna.
-2. Editar vacuna.
-3. Anular vacuna.
-4. Ver documentos.
-5. Descargar documentos.
+1. Guardar.
+2. Cancelar.
+3. Subir documentos.
 
 Validaciones:
 
-1. Nombre de vacuna obligatorio.
-2. Fecha de aplicacion obligatoria.
-3. Quien lo aplico obligatorio.
-
-## P-17 Herrajes
-
-Campos:
-
-1. Informacion del herraje.
-2. Fecha.
-3. Observaciones.
-4. Documentos opcionales.
-
-Acciones:
-
-1. Registrar herraje.
-2. Editar herraje.
-3. Anular herraje.
-4. Ver documentos.
-5. Descargar documentos.
-
-Validaciones:
-
-1. Fecha obligatoria.
-2. Informacion del herraje obligatoria.
-
-## P-18 Documentos
-
-Campos:
-
-1. Nombre del conjunto documental.
-2. Descripcion.
-3. Archivos.
-4. Nombre individual opcional por archivo.
-5. Descripcion individual opcional por archivo.
-
-Acciones:
-
-1. Subir uno o varios documentos.
-2. Visualizar documento.
-3. Descargar documento individual.
-4. Descargar conjunto documental.
-5. Editar nombre o descripcion.
-6. Anular o eliminar logicamente documento.
-
-Validaciones:
-
-1. Nombre del conjunto documental obligatorio.
-2. Al menos un archivo obligatorio.
-3. Formato permitido.
+1. Nombre de vacuna es obligatorio.
+2. Fecha de aplicacion es obligatoria.
+3. Quien lo aplico es obligatorio.
 
 ## P-19 Arbol genealogico
 
@@ -1281,6 +1305,353 @@ Validaciones:
 2. Invitacion debe tener expiracion.
 3. Link de invitacion solo puede usarse una vez.
 
+## P-22 Modal editar pago de estadia
+
+Modal que se abre desde la seccion de pagos en P-14 Ficha de pension/estadia.
+
+Campos:
+
+1. Fecha de pago.
+2. Meses pagados.
+3. Medio de pago: efectivo o transferencia.
+4. Monto pagado.
+5. Comprobante opcional.
+6. Observaciones.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+3. Subir comprobante.
+
+Validaciones:
+
+1. Fecha de pago es obligatoria.
+2. Al menos un mes pagado es obligatorio.
+3. Medio de pago es obligatorio.
+4. Monto pagado es obligatorio.
+5. Advertir si el mes ya fue pagado en la misma pension.
+
+## P-23 Modal registrar herraje
+
+Modal que se abre desde P-07 Ficha de caballo propio o P-13 Ficha de caballo pensionado.
+
+Campos:
+
+1. Informacion del herraje.
+2. Fecha.
+3. Observaciones.
+4. Documentos opcionales.
+
+Acciones:
+
+1. Guardar.
+2. Cancelar.
+3. Subir documentos.
+
+Validaciones:
+
+1. Fecha es obligatoria.
+2. Informacion del herraje es obligatoria.
+
+## P-24 Modal editar herraje
+
+Modal que se abre desde el detalle de herraje en P-07 o P-13.
+
+Campos:
+
+1. Informacion del herraje.
+2. Fecha.
+3. Observaciones.
+4. Documentos opcionales.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+3. Subir documentos.
+
+Validaciones:
+
+1. Fecha es obligatoria.
+2. Informacion del herraje es obligatoria.
+
+## P-25 Modal subir documentos
+
+Modal que se abre desde P-07 Ficha de caballo propio, P-10 Ficha de cliente, P-13 Ficha de caballo pensionado o P-14 Ficha de pension/estadia, segun la entidad de origen.
+
+Campos:
+
+1. Archivos.
+2. Nombre del conjunto documental.
+3. Descripcion del conjunto.
+4. Nombre individual opcional por archivo.
+5. Descripcion individual opcional por archivo.
+
+Acciones:
+
+1. Subir.
+2. Cancelar.
+
+Validaciones:
+
+1. Nombre del conjunto documental es obligatorio.
+2. Al menos un archivo es obligatorio.
+3. Formato de archivo permitido.
+4. Tamaño de archivo no excede el maximo.
+
+## P-26 Modal editar caballo propio
+
+Modal que se abre desde P-07 Ficha de caballo propio al seleccionar Editar.
+
+Campos obligatorios:
+
+1. Nombre.
+2. Sexo.
+3. Color.
+4. Distintivos.
+
+Campos opcionales:
+
+1. Notas.
+2. Nombre del criadero.
+3. Fecha de nacimiento.
+4. Nombre del criador.
+5. Lugar donde se encuentra temporalmente.
+6. Padre.
+7. Madre.
+8. Estado propio.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+
+Validaciones:
+
+1. Nombre, sexo, color y distintivos son obligatorios.
+2. Padre y madre pueden ser caballos registrados o nombres externos.
+
+## P-27 Modal editar cliente
+
+Modal que se abre desde P-10 Ficha de cliente al seleccionar Editar.
+
+Campos:
+
+1. Nombre.
+2. Apellido.
+3. Direccion.
+4. Numero de contacto.
+5. Notas.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+
+Validaciones:
+
+1. Nombre es obligatorio.
+2. Apellido es obligatorio.
+3. Numero de contacto es obligatorio.
+
+## P-28 Modal editar caballo pensionado
+
+Modal que se abre desde P-13 Ficha de caballo pensionado al seleccionar Editar.
+
+Campos obligatorios:
+
+1. Nombre.
+2. Sexo.
+3. Color.
+4. Distintivos.
+5. Dueño o cliente.
+
+Campos opcionales:
+
+1. Notas.
+2. Nombre del criadero.
+3. Fecha de nacimiento.
+4. Nombre del criador.
+5. Padre.
+6. Madre.
+7. Estado pensionado.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+
+Validaciones:
+
+1. Debe existir un cliente seleccionado como dueño.
+2. Nombre, sexo, color, distintivos y dueño son obligatorios.
+
+## P-29 Modal editar vacuna
+
+Modal que se abre desde el detalle de vacuna en P-07 o P-13.
+
+Campos:
+
+1. Nombre de vacuna.
+2. Fecha de aplicacion.
+3. Quien lo aplico.
+4. Observaciones.
+5. Documentos opcionales.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+3. Subir documentos.
+
+Validaciones:
+
+1. Nombre de vacuna es obligatorio.
+2. Fecha de aplicacion es obligatoria.
+3. Quien lo aplico es obligatorio.
+
+## P-30 Modal cambiar estado de caballo
+
+Modal que se abre desde P-07 Ficha de caballo propio o P-13 Ficha de caballo pensionado.
+
+Campos:
+
+1. Nuevo estado segun catalogo por tipo de caballo.
+2. Motivo o nota opcional.
+
+Acciones:
+
+1. Confirmar cambio.
+2. Cancelar.
+
+Validaciones:
+
+1. El estado debe ser valido para el tipo de caballo.
+2. Cambios de estado deben quedar en historial.
+
+## P-31 Modal finalizar pension
+
+Modal que se abre desde P-14 Ficha de pension/estadia al seleccionar Finalizar.
+
+Campos:
+
+1. Fecha de salida real.
+2. Fotos o documentos de salida opcionales.
+
+Acciones:
+
+1. Confirmar finalizacion.
+2. Cancelar.
+
+Validaciones:
+
+1. Fecha de salida real obligatoria.
+2. Fecha de salida no puede ser anterior a la fecha de inicio.
+3. Advertir si existen pagos pendientes o deuda.
+
+## P-32 Modal editar documento
+
+Modal que se abre desde la seccion Documentos de cualquier ficha.
+
+Campos:
+
+1. Nombre del conjunto documental.
+2. Descripcion del conjunto.
+3. Nombre individual por archivo.
+4. Descripcion individual por archivo.
+
+Acciones:
+
+1. Guardar cambios.
+2. Cancelar.
+
+Validaciones:
+
+1. Nombre del conjunto documental es obligatorio.
+
+## P-33 Modal recuperar contraseña
+
+Modal que se abre desde P-01 Login.
+
+Campos:
+
+1. Correo electronico registrado.
+
+Acciones:
+
+1. Enviar enlace de recuperacion.
+2. Cancelar.
+
+Validaciones:
+
+1. Correo debe tener formato valido.
+2. Correo debe estar registrado en el sistema.
+
+## P-34 Modal restablecer contraseña
+
+Modal que se abre desde el enlace de recuperacion enviado por correo.
+
+Campos:
+
+1. Nueva contraseña.
+2. Confirmacion de nueva contraseña.
+
+Acciones:
+
+1. Restablecer contraseña.
+2. Cancelar.
+
+Validaciones:
+
+1. Token de recuperacion valido y vigente.
+2. Contraseñas coincidentes.
+3. Longitud minima de contraseña.
+
+## P-35 Perfil de usuario administrador
+
+Pantalla accesible desde el menu de navegacion para el usuario autenticado.
+
+Muestra:
+
+1. Nombre.
+2. Apellido.
+3. Correo.
+4. Rol.
+5. Estado de cuenta.
+
+Acciones:
+
+1. Editar nombre y apellido.
+2. Cambiar contraseña.
+3. Cerrar sesion.
+
+Validaciones:
+
+1. Solo puede ver y editar su propio perfil.
+2. No puede cambiar su propio rol.
+
+## P-36 Configuracion del sistema
+
+Pantalla accesible solo para owner desde el menu de navegacion.
+
+Muestra:
+
+1. Parametros generales del sistema.
+2. Formatos de archivo permitidos.
+3. Tamaño maximo de archivos.
+4. Tiempo de expiracion de invitaciones por defecto.
+5. Estados de caballos configurables.
+
+Acciones:
+
+1. Guardar configuracion.
+
+Validaciones:
+
+1. Solo owner puede acceder y modificar.
+2. Cambios deben quedar en historial con tipo system.
+
 ---
 
 # C. Modelo de datos
@@ -1297,61 +1668,184 @@ Decision de modelado:
 
 | entidad | proposito | campos clave |
 |---|---|---|
-| `users` | administradores con acceso al sistema | `id`, `first_name`, `last_name`, `email`, `password_hash`, `status`, `created_at`, `updated_at` |
+| `users` | administradores con acceso al sistema | `id`, `first_name`, `last_name`, `email`, `password_hash`, `role_id`, `status`, `created_at`, `updated_at` |
+| `user_roles` | catalogo de roles del sistema | `id`, `code`, `name`, `description`, `is_active` |
+| `user_sessions` | sesiones activas de administradores | `id`, `user_id`, `token`, `refresh_token`, `expires_at`, `ip_address`, `created_at` |
+| `password_reset_tokens` | tokens de recuperacion de contraseña | `id`, `user_id`, `token`, `expires_at`, `used_at`, `created_at` |
+| `user_preferences` | preferencias por usuario | `id`, `user_id`, `preference_key`, `preference_value` |
 | `admin_invitations` | links de invitacion para nuevos administradores | `id`, `email`, `token`, `status`, `expires_at`, `used_at`, `created_by`, `created_at` |
-| `clients` | clientes externos dueños de caballos pensionados | `id`, `first_name`, `last_name`, `address`, `phone`, `notes`, `status`, `created_at`, `updated_at` |
-| `horses` | caballos propios y pensionados | `id`, `ownership_type`, `client_id`, `name`, `sex`, `color`, `distinctive_marks`, `notes`, `breeding_farm_name`, `birth_date`, `breeder_name`, `temporary_location`, `status_id`, `created_at`, `updated_at` |
+| `clients` | clientes externos dueños de caballos pensionados | `id`, `first_name`, `last_name`, `primary_address_id`, `notes`, `status_id`, `created_at`, `updated_at` |
+| `client_statuses` | catalogo de estados de cliente | `id`, `code`, `name`, `description`, `is_active` |
+| `client_contacts` | contactos normalizados por cliente | `id`, `client_id`, `contact_type`, `value`, `notes`, `is_primary` |
+| `addresses` | direcciones normalizadas | `id`, `client_id`, `street`, `city_id`, `postal_code`, `type`, `is_primary` |
+| `regions` | regiones o provincias | `id`, `name` |
+| `cities` | ciudades asociadas a regiones | `id`, `region_id`, `name` |
+| `horses` | caballos propios y pensionados | `id`, `ownership_type_id`, `client_id`, `name`, `sex_id`, `color_id`, `breed_id`, `distinctive_marks`, `notes`, `breeding_farm_name`, `birth_date`, `breeder_name`, `temporary_location`, `status_id`, `created_at`, `updated_at` |
+| `horse_ownership_types` | catalogo de tipo de propiedad | `id`, `code`, `name`, `description` |
+| `horse_sexes` | catalogo de sexos de caballo | `id`, `code`, `name` |
+| `horse_colors` | catalogo de colores o pelajes | `id`, `code`, `name`, `description` |
+| `horse_breeds` | catalogo de razas de caballo | `id`, `code`, `name`, `description` |
 | `horse_statuses` | estados configurables de caballos | `id`, `horse_type`, `name`, `description`, `is_active`, `sort_order` |
-| `boarding_stays` | pensiones o estadias independientes de caballos pensionados | `id`, `horse_id`, `client_id`, `start_date`, `estimated_end_date`, `actual_end_date`, `boarding_type`, `custom_boarding_type`, `agreement_status`, `boarding_cost`, `monthly_hay_bales`, `monthly_oats`, `other_supplies`, `care_notes`, `created_at`, `updated_at` |
-| `boarding_payments` | pagos asociados a una pension especifica | `id`, `boarding_stay_id`, `horse_id`, `client_id`, `payment_date`, `paid_months`, `payment_method`, `amount_paid`, `notes`, `status`, `created_at`, `updated_at` |
-| `vaccinations` | vacunas registradas a cualquier caballo | `id`, `horse_id`, `vaccine_name`, `application_date`, `applied_by`, `notes`, `status`, `created_at`, `updated_at` |
-| `farrier_records` | herrajes registrados a cualquier caballo | `id`, `horse_id`, `service_date`, `description`, `notes`, `status`, `created_at`, `updated_at` |
+| `horse_gallery` | fotos y bocetos de caballos | `id`, `horse_id`, `file_name`, `title`, `description`, `type`, `storage_path`, `uploaded_by`, `created_at` |
+| `horse_genealogy` | relaciones genealogicas de caballos | `id`, `horse_id`, `father_horse_id`, `mother_horse_id`, `father_external_name`, `mother_external_name`, `created_at`, `updated_at` |
+| `boarding_stays` | pensiones o estadias independientes de caballos pensionados | `id`, `horse_id`, `client_id`, `start_date`, `estimated_end_date`, `actual_end_date`, `boarding_type_id`, `custom_boarding_type`, `agreement_status_id`, `boarding_cost`, `care_notes`, `created_at`, `updated_at` |
+| `boarding_types` | catalogo de tipos de pension | `id`, `code`, `name`, `description`, `is_active` |
+| `agreement_statuses` | catalogo de estados del acuerdo | `id`, `code`, `name`, `description`, `sort_order` |
+| `boarding_stay_supplies` | insumos acordados por pension | `id`, `boarding_stay_id`, `supply_id`, `quantity_per_month`, `unit`, `notes` |
+| `boarding_payments` | pagos asociados a una pension especifica | `id`, `boarding_stay_id`, `horse_id`, `client_id`, `payment_date`, `paid_months`, `payment_method_id`, `amount_paid`, `notes`, `status_id`, `created_at`, `updated_at` |
+| `payment_methods` | catalogo de medios de pago | `id`, `code`, `name`, `description` |
+| `payment_statuses` | catalogo de estados de pago | `id`, `code`, `name`, `description` |
+| `vaccinations` | vacunas registradas a cualquier caballo | `id`, `horse_id`, `vaccine_name`, `application_date`, `applied_by`, `notes`, `status_id`, `created_at`, `updated_at` |
+| `vaccination_statuses` | catalogo de estados de vacuna | `id`, `code`, `name`, `description` |
+| `farrier_records` | herrajes registrados a cualquier caballo | `id`, `horse_id`, `service_date`, `description`, `notes`, `status_id`, `created_at`, `updated_at` |
+| `farrier_record_statuses` | catalogo de estados de herraje | `id`, `code`, `name`, `description` |
+| `health_treatments` | eventos sanitarios generales (unifica vacunas/herrajes + otros) | `id`, `horse_id`, `treatment_type`, `date`, `description`, `performed_by`, `notes`, `status_id`, `created_at`, `updated_at` |
+| `supplies` | catalogo de insumos | `id`, `name`, `unit`, `description`, `is_active` |
+| `feed_inventory` | control de existencias de insumos | `id`, `supply_id`, `quantity`, `unit`, `entry_date`, `expiry_date`, `notes` |
 | `document_batches` | conjunto de documentos subidos juntos | `id`, `entity_type`, `entity_id`, `name`, `description`, `uploaded_by`, `status`, `created_at`, `updated_at` |
 | `documents` | archivos individuales dentro de un conjunto documental | `id`, `batch_id`, `file_name`, `display_name`, `description`, `mime_type`, `file_size`, `storage_path`, `status`, `created_at` |
-| `horse_genealogy` | relaciones genealogicas de caballos | `id`, `horse_id`, `father_horse_id`, `mother_horse_id`, `father_external_name`, `mother_external_name`, `created_at`, `updated_at` |
-| `audit_logs` | historial de acciones y modificaciones | `id`, `actor_user_id`, `entity_type`, `entity_id`, `action`, `before`, `after`, `reason`, `created_at` |
+| `file_formats` | formatos de archivo permitidos | `id`, `extension`, `mime_type`, `max_size`, `is_active` |
+| `audit_logs` | historial de acciones y modificaciones | `id`, `actor_user_id`, `entity_type`, `entity_id`, `action`, `importance_id`, `event_type_id`, `before`, `after`, `reason`, `created_at` |
+| `audit_log_field_changes` | cambios individuales por campo en auditoria | `id`, `audit_log_id`, `field_name`, `old_value`, `new_value` |
+| `importance_levels` | catalogo de niveles de importancia | `id`, `code`, `name`, `description`, `sort_order` |
+| `event_types` | catalogo de tipos de evento de auditoria | `id`, `code`, `name`, `description` |
+| `system_config` | parametros globales del sistema | `id`, `key`, `value`, `description`, `updated_by`, `updated_at` |
+| `notification_log` | historial de notificaciones internas | `id`, `user_id`, `notification_type`, `message`, `read_at`, `created_at` |
 
 ## Reglas del modelo
 
-1. Si `horses.ownership_type = own`, entonces `client_id` debe quedar vacio.
-2. Si `horses.ownership_type = boarded`, entonces `client_id` es obligatorio.
+1. Si `horses.ownership_type_id = own`, entonces `client_id` debe quedar vacio.
+2. Si `horses.ownership_type_id = boarded`, entonces `client_id` es obligatorio.
 3. `temporary_location` aplica solo a caballos propios.
 4. Los caballos pensionados se asumen ubicados en las pecebreras del criadero.
 5. Un caballo pensionado puede tener muchas `boarding_stays`.
 6. Cada `boarding_stay` representa una temporada, periodo o acuerdo independiente.
 7. Los pagos se asocian a `boarding_stays`, no directamente al caballo como acuerdo general.
-8. Vacunas y herrajes se asocian siempre a `horses`, independiente de si el caballo es propio o pensionado.
+8. Vacunas, herrajes y tratamientos se asocian siempre a `horses`.
 9. Documentos se asocian de forma polimorfica mediante `entity_type` y `entity_id`.
 10. `horse_statuses.horse_type` debe permitir estados separados para caballos propios y pensionados.
+11. Todo campo FK que apunte a una tabla de catalogo (ej: `sex_id`, `color_id`, `boarding_type_id`) debe referenciar un registro existente en la tabla correspondiente.
+12. Las tablas de catalogo deben poblarse con valores semilla durante la inicializacion del sistema.
+13. La tabla `boarding_stay_supplies` reemplaza los campos `monthly_hay_bales`, `monthly_oats` y `other_supplies` de la entidad `boarding_stays`. Cada insumo se registra como una fila separada.
+14. `horse_gallery.type` distingue entre `photo` y `boceto`. Las imagenes de galeria tienen su propio almacenamiento separado de los documentos generales.
+15. `client_contacts` permite multiples contactos (telefono, email, otros) por cliente. Al menos un contacto debe marcarse como `is_primary`.
+16. `addresses` permite multiples direcciones por cliente. `primary_address_id` en `clients` es la direccion principal vigente.
+17. `audit_log_field_changes` desnormaliza los `before`/`after` de `audit_logs` para permitir filtrado granular por campo modificado.
+18. `system_config` almacena parametros globales (tamaño maximo de archivos, expiracion de invitaciones, etc.). Solo owner puede modificar sus valores.
+19. `health_treatments` unifica eventos sanitarios. `treatment_type` define si es vacuna, herraje, desparasitacion, curacion u otro cuidado.
+20. `user_sessions` permite control de sesiones activas y refresh tokens. Una sesion expirada se considera cerrada.
+21. `password_reset_tokens` son de un solo uso. Al usarse, `used_at` se actualiza y el token no puede reutilizarse.
+22. `feed_inventory` registra entradas de insumos. La salida o consumo se gestiona fuera del alcance actual, pero la tabla permite trazabilidad de existencias.
+23. `notification_log` no implica notificaciones en tiempo real. Es un registro historico de notificaciones generadas por el sistema.
 
-## Valores iniciales sugeridos
+## Valores semilla para tablas de catalogo
 
-### `boarding_type`
+Las siguientes tablas de catalogo deben poblarse durante la inicializacion del sistema. Los valores pueden ser modificados posteriormente por administradores autorizados.
 
-1. `client_supplies`: insumos aportados por cliente.
-2. `breeding_farm_supplies`: insumos incluidos por criadero.
-3. `mixed`: mixta.
-4. `other`: otro.
+### `user_roles`
 
-### `agreement_status`
+| code | name |
+|---|---|
+| `owner` | Propietaria |
+| `admin` | Administrador |
 
-1. `active`: activo.
-2. `payment_pending`: pendiente de pago.
-3. `debt`: con deuda.
-4. `finished`: finalizado.
-5. `cancelled`: cancelado.
+### `horse_ownership_types`
 
-### `payment_method`
+| code | name |
+|---|---|
+| `own` | Propio |
+| `boarded` | Pensionado |
 
-1. `cash`: efectivo.
-2. `bank_transfer`: transferencia.
+### `horse_sexes`
 
-### `payment_status`
+| code | name |
+|---|---|
+| `male` | Macho |
+| `female` | Hembra |
+| `gelding` | Capon |
 
-1. `valid`: valido.
-2. `cancelled`: anulado.
+### `boarding_types`
+
+| code | name | description |
+|---|---|---|
+| `client_supplies` | Insumos aportados por cliente | El cliente provee los insumos |
+| `farm_supplies` | Insumos incluidos por criadero | El criadero incluye los insumos |
+| `mixed` | Mixta | Combinacion de ambos |
+| `other` | Otro | Describir en campo libre |
+
+### `agreement_statuses`
+
+| code | name | sort_order |
+|---|---|---|
+| `active` | Activo | 1 |
+| `payment_pending` | Pendiente de pago | 2 |
+| `debt` | Con deuda | 3 |
+| `finished` | Finalizado | 4 |
+| `cancelled` | Cancelado | 5 |
+
+### `payment_methods`
+
+| code | name |
+|---|---|
+| `cash` | Efectivo |
+| `bank_transfer` | Transferencia |
+
+### `payment_statuses`
+
+| code | name |
+|---|---|
+| `valid` | Valido |
+| `cancelled` | Anulado |
+
+### `client_statuses`
+
+| code | name |
+|---|---|
+| `active` | Activo |
+| `inactive` | Inactivo |
+
+### `vaccination_statuses`
+
+| code | name |
+|---|---|
+| `valid` | Valida |
+| `cancelled` | Anulada |
+
+### `farrier_record_statuses`
+
+| code | name |
+|---|---|
+| `valid` | Valido |
+| `cancelled` | Anulado |
+
+### `importance_levels`
+
+| code | name | sort_order |
+|---|---|---|
+| `low` | Baja | 1 |
+| `medium` | Media | 2 |
+| `high` | Alta | 3 |
+| `critical` | Critica | 4 |
+
+### `event_types`
+
+| code | name |
+|---|---|
+| `horse` | Caballo |
+| `client` | Cliente |
+| `boarding_stay` | Pension |
+| `boarding_payment` | Pago |
+| `vaccination` | Vacuna |
+| `farrier_record` | Herraje |
+| `health_treatment` | Tratamiento |
+| `document` | Documento |
+| `genealogy` | Genealogia |
+| `security` | Seguridad |
+| `system` | Sistema |
 
 ### `document entity_type`
+
+(Se mantiene como referencia polimorfica, no requiere tabla separada.)
 
 1. `horse`.
 2. `client`.
@@ -1359,6 +1853,7 @@ Decision de modelado:
 4. `boarding_payment`.
 5. `vaccination`.
 6. `farrier_record`.
+7. `health_treatment`.
 
 ---
 
@@ -1378,6 +1873,22 @@ Decision de modelado:
 10. Herrajes requieren fecha e informacion del herraje.
 11. Todo documento debe pertenecer a un lote documental con nombre.
 12. No se elimina fisicamente informacion con historial; se inactiva, anula, cancela o finaliza segun corresponda.
+13. Todo campo FK a tabla de catalogo debe contener un ID valido existente en la tabla referenciada.
+14. `sex_id`, `color_id`, `breed_id`, `ownership_type_id` en `horses` son FK obligatorios a sus catalogos respectivos.
+15. `boarding_type_id` y `agreement_status_id` en `boarding_stays` son FK obligatorios.
+16. `payment_method_id` en `boarding_payments` es FK obligatorio a `payment_methods`.
+17. `role_id` en `users` es FK obligatorio a `user_roles`.
+18. `client_status_id` en `clients` es FK obligatorio a `client_statuses`.
+19. Cada registro en `boarding_stay_supplies` debe tener un `boarding_stay_id` valido y un `supply_id` valido.
+20. `supply_id` en `feed_inventory` debe referenciar un insumo existente en `supplies`.
+21. `importance_id` en `audit_logs` debe referenciar un nivel valido en `importance_levels`.
+22. `event_type_id` en `audit_logs` debe referenciar un tipo valido en `event_types`.
+23. La galeria `horse_gallery` solo acepta `type` = `photo` o `boceto`.
+24. `file_format.extension` debe almacenarse sin punto (ej: `pdf`, `jpg`, `png`).
+25. `system_config.key` debe ser unico. No puede haber dos configuraciones con la misma clave.
+26. Un cliente debe tener al menos un contacto primario en `client_contacts`.
+27. `password_reset_tokens.token` debe ser unico. Al usarse, `used_at` no debe ser nulo.
+28. `user_sessions.token` debe ser unico por sesion activa.
 
 ## D.2 Historial y auditoria
 
@@ -1504,6 +2015,15 @@ DELETE /api/v1/horses/{id}
 POST   /api/v1/horses/{id}/change-status
 ```
 
+## Galeria de caballos
+
+```http
+GET   /api/v1/horses/{id}/gallery
+POST  /api/v1/horses/{id}/gallery
+GET   /api/v1/horses/{id}/gallery/{itemId}
+DELETE /api/v1/horses/{id}/gallery/{itemId}
+```
+
 ## Pensiones o estadias
 
 ```http
@@ -1517,6 +2037,15 @@ PATCH  /api/v1/boarding-stays/{id}
 DELETE /api/v1/boarding-stays/{id}
 POST   /api/v1/boarding-stays/{id}/finish
 POST   /api/v1/boarding-stays/{id}/cancel
+```
+
+## Insumos de pension
+
+```http
+GET   /api/v1/boarding-stays/{id}/supplies
+POST  /api/v1/boarding-stays/{id}/supplies
+PATCH /api/v1/boarding-stays/{id}/supplies/{supplyId}
+DELETE /api/v1/boarding-stays/{id}/supplies/{supplyId}
 ```
 
 ## Pagos de estadia
@@ -1554,6 +2083,17 @@ PATCH /api/v1/farrier-records/{id}
 POST  /api/v1/farrier-records/{id}/cancel
 ```
 
+## Tratamientos de salud
+
+```http
+GET   /api/v1/health-treatments
+GET   /api/v1/health-treatments?horse_id={id}
+POST  /api/v1/health-treatments
+GET   /api/v1/health-treatments/{id}
+PATCH /api/v1/health-treatments/{id}
+POST  /api/v1/health-treatments/{id}/cancel
+```
+
 ## Documentos
 
 ```http
@@ -1589,6 +2129,75 @@ PATCH /api/v1/horse-statuses/{id}
 POST  /api/v1/horse-statuses/{id}/activate
 POST  /api/v1/horse-statuses/{id}/deactivate
 ```
+## Catalogos
+
+Endpoints genericos para administracion de tablas de catalogo. Solo accesibles para owner.
+
+```http
+GET   /api/v1/catalogs/user-roles
+POST  /api/v1/catalogs/user-roles
+PATCH /api/v1/catalogs/user-roles/{id}
+
+GET   /api/v1/catalogs/horse-ownership-types
+POST  /api/v1/catalogs/horse-ownership-types
+PATCH /api/v1/catalogs/horse-ownership-types/{id}
+
+GET   /api/v1/catalogs/horse-sexes
+POST  /api/v1/catalogs/horse-sexes
+PATCH /api/v1/catalogs/horse-sexes/{id}
+
+GET   /api/v1/catalogs/horse-colors
+POST  /api/v1/catalogs/horse-colors
+PATCH /api/v1/catalogs/horse-colors/{id}
+
+GET   /api/v1/catalogs/horse-breeds
+POST  /api/v1/catalogs/horse-breeds
+PATCH /api/v1/catalogs/horse-breeds/{id}
+
+GET   /api/v1/catalogs/boarding-types
+POST  /api/v1/catalogs/boarding-types
+PATCH /api/v1/catalogs/boarding-types/{id}
+
+GET   /api/v1/catalogs/agreement-statuses
+POST  /api/v1/catalogs/agreement-statuses
+PATCH /api/v1/catalogs/agreement-statuses/{id}
+
+GET   /api/v1/catalogs/payment-methods
+POST  /api/v1/catalogs/payment-methods
+PATCH /api/v1/catalogs/payment-methods/{id}
+
+GET   /api/v1/catalogs/payment-statuses
+POST  /api/v1/catalogs/payment-statuses
+PATCH /api/v1/catalogs/payment-statuses/{id}
+
+GET   /api/v1/catalogs/client-statuses
+POST  /api/v1/catalogs/client-statuses
+PATCH /api/v1/catalogs/client-statuses/{id}
+
+GET   /api/v1/catalogs/vaccination-statuses
+POST  /api/v1/catalogs/vaccination-statuses
+PATCH /api/v1/catalogs/vaccination-statuses/{id}
+
+GET   /api/v1/catalogs/farrier-record-statuses
+POST  /api/v1/catalogs/farrier-record-statuses
+PATCH /api/v1/catalogs/farrier-record-statuses/{id}
+
+GET   /api/v1/catalogs/importance-levels
+POST  /api/v1/catalogs/importance-levels
+PATCH /api/v1/catalogs/importance-levels/{id}
+
+GET   /api/v1/catalogs/event-types
+POST  /api/v1/catalogs/event-types
+PATCH /api/v1/catalogs/event-types/{id}
+
+GET   /api/v1/catalogs/supplies
+POST  /api/v1/catalogs/supplies
+PATCH /api/v1/catalogs/supplies/{id}
+
+GET   /api/v1/catalogs/file-formats
+POST  /api/v1/catalogs/file-formats
+PATCH /api/v1/catalogs/file-formats/{id}
+```
 
 ## Buscador global
 
@@ -1604,6 +2213,28 @@ GET /api/v1/search?q={texto}&type=boarding_stays
 
 ```http
 GET /api/v1/dashboard/summary
+```
+
+## Preferencias de usuario
+
+```http
+GET   /api/v1/users/{id}/preferences
+PATCH /api/v1/users/{id}/preferences
+```
+
+## Configuracion del sistema
+
+```http
+GET   /api/v1/system-config
+PATCH /api/v1/system-config
+```
+
+## Inventario de insumos
+
+```http
+GET   /api/v1/feed-inventory
+POST  /api/v1/feed-inventory
+GET   /api/v1/feed-inventory/{id}
 ```
 
 ## Historial / auditoria
@@ -2037,7 +2668,264 @@ Responsabilidades:
 
 # J. Estrategia de pruebas
 
-## J.1 Pruebas unitarias
+## J.1 Stack de pruebas
+
+| capa | framework | comando |
+|---|---|---|
+| Backend unit + integracion | **Jest** + **Supertest** | `npm run test` |
+| Backend cobertura | **Jest --coverage** | `npm run test:cov` |
+| Frontend unit + componentes | **Vitest** + **React Testing Library** | `npm run test` (en frontend) |
+| Frontend cobertura | **Vitest --coverage** | `npm run test:cov` (en frontend) |
+| E2E | **Playwright** | `npm run test:e2e` |
+| API documentation | **OpenAPI 3.1** (generado por NestJS Swagger) | `npm run build:docs` |
+
+### Configuracion de cobertura
+
+Las herramientas deben configurarse para:
+
+- **Jest** (`jest.config.ts`): `collectCoverageFrom` incluyendo `src/**/*.service.ts`, `src/**/*.controller.ts`, `src/**/*.guard.ts`
+- **Vitest** (`vitest.config.ts`): `include` apuntando a `src/**/*.tsx`, `src/**/*.ts` (excluyendo paginas y layouts)
+- **Playwright**: configuracion en `playwright.config.ts` con proyectos para Chrome y Firefox
+
+## J.2 Cobertura minima
+
+### Backend (Jest + Supertest)
+
+| metrica | minimo |
+|---|---|
+| Lines | ≥ 90% |
+| Branches | ≥ 85% |
+| Functions | ≥ 90% |
+| Statements | ≥ 90% |
+
+Archivos con cobertura obligatoria (el pipeline falla si estan por debajo del minimo):
+
+- Todos los `*.service.ts` (reglas de negocio)
+- Todos los `*.guard.ts` (permisos)
+- Todos los `*.controller.ts` (validacion de entrada y respuesta)
+- Todos los `*.pipe.ts` (validacion de parametros)
+- Todos los `*.interceptor.ts` (auditoria)
+
+### Frontend (Vitest + React Testing Library)
+
+| metrica | minimo |
+|---|---|
+| Lines | ≥ 80% |
+| Branches | ≥ 75% |
+| Functions | ≥ 80% |
+
+Componentes con cobertura obligatoria:
+
+- Formularios (crear y editar)
+- Fichas de detalle
+- Modales de confirmacion
+- Componentes de listado con filtros
+- Buscador global
+- Arbol genealogico
+
+### E2E (Playwright)
+
+- 100% de los casos definidos en J.3 deben estar implementados y pasar
+- Cada caso debe incluir assertion de estado final esperado
+- Los casos deben ejecutarse contra una base de datos de prueba (SQLite o PostgreSQL test)
+
+## J.3 Pipeline CI/CD
+
+Plataforma: **GitHub Actions**
+
+Archivo: `.github/workflows/ci.yml`
+
+```yaml
+name: CI
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run lint
+
+  test-backend:
+    needs: lint
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: criadero_test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports: [5432:5432]
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run test:cov
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/criadero_test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-backend
+          path: coverage/
+
+  test-frontend:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run test:cov
+        working-directory: ./frontend
+
+  test-e2e:
+    needs: [test-backend, test-frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npx playwright install
+      - run: npm run test:e2e
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/criadero_test
+```
+
+Reglas del pipeline:
+
+1. `lint` debe pasar siempre.
+2. `test-backend` debe cumplir cobertura minima. Si falla, el pipeline se detiene.
+3. `test-frontend` debe cumplir cobertura minima. Si falla, el pipeline se detiene.
+4. `test-e2e` debe pasar todos los casos. Si falla, el pipeline se detiene.
+5. Los artefactos de cobertura se almacenan por 30 dias.
+
+## J.4 Estructura de carpetas para pruebas
+
+```
+backend/
+  src/
+    __tests__/
+      unit/
+        horses.service.spec.ts
+        clients.service.spec.ts
+        boarding-stays.service.spec.ts
+        boarding-payments.service.spec.ts
+        vaccinations.service.spec.ts
+        farrier-records.service.spec.ts
+        documents.service.spec.ts
+        genealogy.service.spec.ts
+        users.service.spec.ts
+        audit-logs.service.spec.ts
+        horse-statuses.service.spec.ts
+      integration/
+        client-horse-boarding.integration.spec.ts
+        payment-duplicate.integration.spec.ts
+        finish-boarding.integration.spec.ts
+        reactivate-client-horse.integration.spec.ts
+        document-upload.integration.spec.ts
+        permissions-owner-admin.integration.spec.ts
+      guards/
+        roles.guard.spec.ts
+        permissions.guard.spec.ts
+      pipes/
+        validation.pipe.spec.ts
+
+frontend/
+  src/
+    __tests__/
+      components/
+        HorseForm.spec.tsx
+        ClientForm.spec.tsx
+        BoardingStayForm.spec.tsx
+        PaymentForm.spec.tsx
+        VaccinationForm.spec.tsx
+        FarrierRecordForm.spec.tsx
+        DocumentUpload.spec.tsx
+        GenealogyTree.spec.tsx
+        AuditLogList.spec.tsx
+        GlobalSearch.spec.tsx
+      pages/
+        Dashboard.spec.tsx
+        HorseDetail.spec.tsx
+        ClientDetail.spec.tsx
+        BoardingStayDetail.spec.tsx
+
+e2e/
+  tests/
+    auth.spec.ts
+    invitations.spec.ts
+    own-horses.spec.ts
+    clients.spec.ts
+    boarded-horses.spec.ts
+    boarding-stays.spec.ts
+    payments.spec.ts
+    duplicate-payment.spec.ts
+    vaccinations.spec.ts
+    farrier-records.spec.ts
+    documents.spec.ts
+    genealogy.spec.ts
+    global-search.spec.ts
+    history.spec.ts
+    permissions.spec.ts
+```
+
+## J.5 Mapa de cobertura obligatoria
+
+| archivo / modulo | tipo prueba | reglas validadas |
+|---|---|---|
+| `horses.service.ts` | unit + integracion | Reglas D.1 items 1-4, 13-14 |
+| `clients.service.ts` | unit + integracion | Reglas D.1 items 2-3, 18, 26 |
+| `boarding-stays.service.ts` | unit + integracion | Reglas D.1 items 4-5, 15 |
+| `boarding-payments.service.ts` | unit + integracion | Reglas D.1 items 6-8, 16 |
+| `vaccinations.service.ts` | unit | Reglas D.1 item 9 |
+| `farrier-records.service.ts` | unit | Reglas D.1 item 10 |
+| `documents.service.ts` | unit + integracion | Reglas D.1 items 11, 24 |
+| `genealogy.service.ts` | unit | Reglas modelo 4-5 |
+| `users.service.ts` | unit + integracion | Permisos owner/admin |
+| `horse-statuses.service.ts` | unit | Estados separados por tipo |
+| `audit-logs.service.ts` | integracion | Registro de acciones en historial |
+| `roles.guard.ts` | unit | Matriz de permisos G.2 |
+| `permissions.guard.ts` | unit | Permisos por endpoint |
+| `system-config.service.ts` | unit | Regla D.1 item 25 |
+| `health-treatments.service.ts` | unit | Regla modelo 19 |
+| `boarding-stay-supplies.service.ts` | unit | Regla modelo 13, D.1 item 19 |
+| `horse-gallery.service.ts` | unit | Regla modelo 14, D.1 item 23 |
+| `addresses.service.ts` | unit | Regla modelo 16 |
+| `client-contacts.service.ts` | unit | Regla modelo 15 |
+
+## J.6 Matriz de pruebas por modulo
+
+| modulo | unit | integracion | E2E |
+|---|---|---|---|
+| Autenticacion | ✅ | ✅ | ✅ |
+| Usuarios / invitaciones | ✅ | ✅ | ✅ |
+| Clientes | ✅ | ✅ | ✅ |
+| Caballos propios | ✅ | ✅ | ✅ |
+| Caballos pensionados | ✅ | ✅ | ✅ |
+| Pensiones o estadias | ✅ | ✅ | ✅ |
+| Pagos de estadia | ✅ | ✅ | ✅ |
+| Vacunas | ✅ | ✅ | — |
+| Herrajes | ✅ | ✅ | — |
+| Tratamientos de salud | ✅ | — | — |
+| Documentos | ✅ | ✅ | ✅ |
+| Genealogia | ✅ | — | ✅ |
+| Estados | ✅ | ✅ | — |
+| Buscador global | — | ✅ | ✅ |
+| Dashboard | — | ✅ | ✅ |
+| Historial / auditoria | — | ✅ | ✅ |
+| Permisos | ✅ | ✅ | ✅ |
+| Catalogos | ✅ | — | — |
+| Configuracion del sistema | — | ✅ | — |
+| Galeria de caballos | ✅ | — | — |
+| Insumos de pension | ✅ | ✅ | — |
+| Perfil de usuario | — | ✅ | ✅ |
+
+## J.7 Pruebas unitarias
 
 Objetivo: validar reglas pequenas y aisladas.
 
@@ -2058,8 +2946,11 @@ Casos minimos:
 13. Validar niveles de importancia del historial.
 14. Validar permisos `owner` y `admin`.
 15. Validar genealogia con padre/madre registrados o nombres externos.
+16. Validar FK a catalogo existente en `sex_id`, `color_id`, `boarding_type_id`.
+17. Validar que `boarding_stay_supplies` requiera `boarding_stay_id` y `supply_id` validos.
+18. Validar unicidad de `system_config.key`.
 
-## J.2 Pruebas de integracion
+## J.8 Pruebas de integracion
 
 Objetivo: validar flujos entre modulos relacionados.
 
@@ -2080,8 +2971,11 @@ Casos minimos:
 13. Subir lote documental asociado a pension.
 14. Subir comprobante asociado a pago.
 15. Consultar historial y verificar usuario, accion, fecha, entidad e importancia.
+16. Verificar que admin no pueda crear invitacion (permiso denegado).
+17. Verificar que owner pueda crear y revocar invitacion.
+18. Verificar que insumos de pension se asocien correctamente mediante catalogo `supplies`.
 
-## J.3 Pruebas E2E
+## J.9 Pruebas E2E
 
 Objetivo: validar flujos completos desde la interfaz.
 
@@ -2108,18 +3002,19 @@ Casos minimos:
 19. Finalizar pension.
 20. Reactivar caballo y crear nueva pension.
 
-## J.4 Evidencia esperada
+## J.10 Evidencia esperada
 
 Cada ejecucion de pruebas debe producir evidencia:
 
-1. Resultado de pruebas unitarias.
-2. Resultado de pruebas de integracion.
-3. Resultado de pruebas E2E.
-4. Capturas o reporte visual de flujos criticos si aplica.
-5. Registro de errores encontrados.
+1. Resultado de pruebas unitarias con cobertura.
+2. Resultado de pruebas de integracion con cobertura.
+3. Resultado de pruebas E2E con reporte HTML.
+4. Capturas o video de flujos criticos si aplica (Playwright trace).
+5. Registro de errores encontrados con stack trace.
 6. Confirmacion de trazabilidad entre requisito y prueba.
+7. Reporte de cobertura subido como artefacto del pipeline.
 
-## J.5 Criterios de aceptacion por modulo
+## J.11 Criterios de aceptacion por modulo
 
 | modulo | aceptacion minima |
 |---|---|
@@ -2143,6 +3038,11 @@ Cada ejecucion de pruebas debe producir evidencia:
 | Reactivacion | clientes y caballos existentes pueden reactivarse sin duplicar registros; nueva temporada crea nueva pension |
 | Integridad documental | documentos cancelados o anulados conservan trazabilidad y no desaparecen sin historial |
 | No acceso de clientes | clientes externos no pueden registrarse, iniciar sesion ni acceder a la plataforma |
+| Catalogos | owner puede gestionar catalogos; admin no puede modificarlos; cambios se reflejan en formularios |
+| Configuracion del sistema | owner puede modificar parametros globales; cambios quedan en historial |
+| Perfil de usuario | usuario puede ver y editar su perfil; no puede cambiar su rol |
+| Galeria de caballos | subir, visualizar y eliminar fotos/bocetos separados de documentos generales |
+| Insumos de pension | registrar, editar y eliminar insumos por pension mediante catalogo normalizado |
 
 ---
 
@@ -2189,3 +3089,218 @@ La especificacion se considera lista para iniciar generacion del proyecto cuando
 16. Queda claro que el historial debe registrar todas las acciones que afecten datos.
 17. Queda claro que cada evento de historial debe mostrar quien realizo la accion.
 18. Queda claro que cada nueva temporada de un caballo pensionado genera una nueva pension o estadia.
+
+---
+
+# M. Checklist de validacion de completitud
+
+Checklist para verificar que cada modulo del producto implementado cumple con los criterios minimos de aceptacion. Cada item debe marcarse como ✅ Cumple o ❌ No cumple. Todos los items deben estar en ✅ para considerar el modulo completo.
+
+## M.1 Autenticacion
+
+1. Login con credenciales validas redirige al dashboard.
+2. Login con credenciales invalidas muestra error y bloquea el acceso.
+3. Cerrar sesion invalida la sesion actual y redirige al login.
+4. Usuario inactivo no puede iniciar sesion.
+5. Recuperacion de contraseña genera token valido y vigente.
+6. Token de recuperacion es de un solo uso.
+
+## M.2 Invitaciones
+
+1. Owner puede crear invitacion con fecha de expiracion.
+2. Link de invitacion funciona solo una vez.
+3. Invitacion vencida muestra mensaje de error y bloquea el registro.
+4. Owner puede revocar invitacion pendiente.
+5. Owner puede consultar historial de invitaciones (pendientes, aceptadas, vencidas, revocadas).
+
+## M.3 Administradores
+
+1. Owner puede listar administradores activos e inactivos.
+2. Owner puede activar e inactivar administradores.
+3. Admin no puede acceder a la seccion de administradores.
+4. Admin no puede crear ni revocar invitaciones.
+5. Cada cambio en estado de administrador queda registrado en historial.
+
+## M.4 Clientes
+
+1. Crear cliente con nombre, apellido y contacto obligatorios.
+2. Editar datos de cliente con registro de antes/despues en historial.
+3. Consultar cliente con caballos pensionados asociados.
+4. Inactivar cliente no elimina sus datos historicos.
+5. Reactivar cliente mantiene caballos y pensiones previas.
+6. Sistema advierte si se intenta duplicar un cliente existente.
+7. Cada reactivacion queda registrada en historial.
+
+## M.5 Caballos propios
+
+1. Crear caballo propio con nombre, sexo, color y distintivos obligatorios.
+2. Editar caballo propio con registro de cambios en historial.
+3. Cambiar estado con seleccion desde catalogo por tipo de caballo.
+4. Asociar padre y madre como caballos registrados o nombres externos.
+5. Visualizar arbol genealogico con nodos navegables.
+6. Subir fotos y bocetos a galeria separada de documentos.
+7. Registrar vacunas y herrajes desde la ficha del caballo.
+8. Ver historial completo de eventos del caballo.
+9. Caballo fallecido (deceased) no permite cambios a otros estados.
+10. `temporary_location` se muestra y edita solo para caballos propios.
+
+## M.6 Caballos pensionados
+
+1. Crear caballo pensionado con cliente dueño obligatorio.
+2. Editar caballo pensionado con registro de cambios en historial.
+3. Cambiar estado segun catalogo de caballos pensionados.
+4. Reactivar caballo sin duplicar registro.
+5. Al reactivar, el sistema sugiere crear nueva pension.
+6. Ver pensiones activas e historicas desde la ficha.
+7. Ver historial completo del caballo.
+
+## M.7 Pensiones o estadias
+
+1. Crear pension con ID unico, fechas, tipo, costo y estado del acuerdo.
+2. Editar pension con registro de antes/despues en historial.
+3. Finalizar pension con fecha de salida real obligatoria.
+4. Cancelar pension conservando pagos, documentos e historial.
+5. Sistema advierte si el caballo ya tiene una pension activa.
+6. Cada nueva temporada genera una nueva pension independiente.
+7. Pension finalizada no puede reabrirse para misma temporada.
+8. Advertir pagos pendientes al finalizar pension (no bloquea).
+
+## M.8 Pagos de estadia
+
+1. Registrar pago asociado a pension con fecha, meses, medio y monto.
+2. Editar pago con registro de antes/despues en historial.
+3. Anular pago con motivo sin borrado fisico.
+4. Sistema bloquea pago duplicado del mismo mes en la misma pension.
+5. Adjuntar y descargar comprobante de pago.
+6. Pago sobre pension finalizada o cancelada advierte y pide confirmacion.
+7. Medio de pago se selecciona desde catalogo (efectivo, transferencia).
+
+## M.9 Vacunas
+
+1. Registrar vacuna con nombre, fecha de aplicacion y quien la aplico.
+2. Editar vacuna con registro de cambios en historial.
+3. Anular vacuna con motivo conservando registro.
+4. Adjuntar documentos opcionales a la vacuna.
+5. Vacunas se listan ordenadas por fecha en la ficha del caballo.
+
+## M.10 Herrajes
+
+1. Registrar herraje con fecha e informacion del servicio.
+2. Editar herraje con registro de cambios en historial.
+3. Anular herraje con motivo conservando registro.
+4. Adjuntar documentos opcionales al herraje.
+5. Herrajes se listan ordenados por fecha en la ficha del caballo.
+
+## M.11 Tratamientos de salud
+
+1. Registrar tratamiento con tipo, fecha, descripcion y quien lo realizo.
+2. Editar tratamiento con registro de cambios en historial.
+3. Anular tratamiento con motivo conservando registro.
+4. Tratamiento se asocia al caballo independiente de vacunas y herrajes.
+
+## M.12 Documentos
+
+1. Subir lote documental con nombre obligatorio y al menos un archivo.
+2. Visualizar documento en la plataforma si el formato lo permite.
+3. Descargar documento individual.
+4. Descargar conjunto documental completo.
+5. Editar nombre y descripcion del lote o documento individual.
+6. Anular documento conservando trazabilidad e historial.
+7. Documento cancelado no desaparece y mantiene registro de quien lo anulo.
+
+## M.13 Genealogia
+
+1. Registrar padre y madre como caballo existente o nombre externo.
+2. Visualizar arbol genealogico con nodos navegables para caballos registrados.
+3. Nodos externos se muestran como texto sin ficha navegable.
+4. Arbol se muestra completo hasta el nivel disponible; si faltan datos, se muestra incompleto sin bloquear.
+
+## M.14 Buscador global
+
+1. Buscar caballos por nombre, color, distintivos o estado.
+2. Buscar clientes por nombre, apellido o contacto.
+3. Buscar pensiones por caballo o cliente.
+4. Buscar documentos por nombre o descripcion.
+5. Resultados se agrupan por tipo con acceso directo a la ficha.
+
+## M.15 Dashboard
+
+1. Muestra total de caballos propios, pensionados y pensiones activas.
+2. Muestra ultimos pagos, vacunas, herrajes y documentos registrados.
+3. Muestra ultimos cambios en historial.
+4. Accesos directos para crear caballo, cliente o pension.
+5. Acceso directo al buscador global.
+
+## M.16 Historial / auditoria
+
+1. Registra creacion, edicion, cambio de estado, anulacion y finalizacion de entidades.
+2. Cada evento muestra usuario con nombre visible, rol, fecha y accion realizada.
+3. Permite filtrar por tipo de evento.
+4. Permite filtrar por importancia (low, medium, high, critical).
+5. Permite filtrar por usuario administrador.
+6. Permite filtrar por fecha o rango de fechas.
+7. Permite filtrar por entidad relacionada.
+8. Permite ordenar por fecha ascendente y descendente.
+9. Permite ordenar por importancia.
+10. Vista por defecto muestra eventos medium, high y critical; low queda disponible por filtro.
+
+## M.17 Permisos
+
+1. Owner tiene acceso total a todas las secciones del sistema.
+2. Admin no puede gestionar usuarios, roles ni invitaciones.
+3. Admin no puede ver eventos de seguridad.
+4. Admin no puede acceder a configuracion del sistema.
+5. Clientes externos no tienen cuenta, login ni acceso a la plataforma.
+6. Cada endpoint valida permisos en backend, no solo en frontend.
+
+## M.18 Catalogos
+
+1. Owner puede gestionar (crear, editar, activar/desactivar) catalogos del sistema.
+2. Admin no puede modificar catalogos.
+3. Catalogos se reflejan correctamente en formularios y listados.
+4. Seed data de catalogos se carga durante la inicializacion del sistema.
+
+## M.19 Configuracion del sistema
+
+1. Owner puede modificar parametros globales (formatos, tamaño archivos, expiracion invitaciones, etc.).
+2. Cambios en configuracion quedan registrados en historial con tipo system.
+3. Admin no puede acceder a la pantalla de configuracion.
+
+## M.20 Perfil de usuario
+
+1. Usuario puede ver y editar su propio perfil (nombre, apellido).
+2. Usuario puede cambiar su propia contraseña.
+3. Usuario no puede cambiar su propio rol.
+
+## M.21 Galeria de caballos
+
+1. Subir foto o boceto a galeria de un caballo.
+2. Visualizar imagenes en galeria.
+3. Eliminar imagen de galeria con registro en historial.
+4. Galeria esta separada de la seccion de documentos generales.
+
+## M.22 Insumos de pension
+
+1. Registrar insumos acordados (fardos, avena, otros) por pension mediante catalogo.
+2. Editar insumos de pension.
+3. Eliminar insumo de pension.
+4. Insumos se muestran en la ficha de pension.
+
+## M.23 Checklist de infraestructura
+
+1. Aplicacion accesible mediante HTTPS en produccion.
+2. Base de datos con respaldo automatizado programado.
+3. Almacenamiento de documentos con respaldo.
+4. Logs de servidor y aplicacion disponibles para diagnostico.
+5. Variables de entorno usadas para configuracion sensible (DB, storage, JWT secret).
+6. Tiempo de respuesta de API no supera 2 segundos en operaciones normales.
+
+## M.24 Checklist de seguridad
+
+1. Todos los endpoints protegidos requieren autenticacion, excepto login, recuperacion y aceptacion de invitacion.
+2. Validacion de permisos implementada en backend por cada endpoint y accion.
+3. Proteccion contra inyeccion SQL mediante parametrizacion de consultas.
+4. Tokens JWT con expiracion configurable.
+5. CORS configurado para permitir solo el origen del frontend.
+6. Contraseñas almacenadas con hash (bcrypt o equivalente).
+7. Archivos subidos validados por tipo y tamaño antes de almacenar.

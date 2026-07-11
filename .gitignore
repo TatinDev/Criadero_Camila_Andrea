@@ -16,6 +16,12 @@ web/node_modules/
 .env
 .env.*
 !.env.example
+web/data/
+web/uploads/
+web/prisma.config.ts
+web/prisma/migrations/
+web/backups/
+web/deploy/ssl/
 
 # Build and coverage outputs
 dist/

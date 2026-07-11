@@ -77,3 +77,28 @@ Respecto al avance anterior, se concreto lo siguiente:
 - Se agrego persistencia local mediante `localStorage`.
 - Se incorporaron pruebas locales para validar reglas principales del sistema.
 - Se agrego documentacion tecnica dentro de `web/docs`.
+
+### Implementacion completa con Prisma y Docker - 11 de julio de 2026
+
+Se migro desde el prototipo web local con datos simulados a una aplicacion completa
+con base de datos PostgreSQL, ORM Prisma, contenedores Docker y autenticacion JWT.
+Todos los modulos fueron reescritos como ES modules nativos y se corrigieron ~100 bugs
+identificados durante la migracion.
+
+Respecto al avance anterior, se concreto lo siguiente:
+
+- Se migro la base de datos a PostgreSQL con Prisma ORM (seed automatico incluido).
+- Se implemento autenticacion con JWT + refresh token.
+- Se agrego sistema de invitaciones con tokens unicos, expiracion y revocacion.
+- Se dockerizo la aplicacion con 3 contenedores (app, postgres, nginx).
+- Se corrigieron ~100 bugs de field names entre frontend y backend.
+- Se separaron Vacunas y Herrajes en modulos independientes con columna de estado.
+- Se agrego sistema de configuracion del sistema accesible por owner.
+- Se agrego CRUD completo de catalogos del sistema.
+- Se implemento galeria de fotos en ficha de caballo.
+- Se mejoro el modal de auditoria con vista adaptativa segun tipo de accion.
+- Se agrego checkbox "Mostrar anulados" en caballos, vacunas y herrajes.
+- Se corrigio el sistema de permisos (PERM_MAP con wildcards funcionales).
+- Se agregaron 50 pruebas smoke, 7 pruebas E2E y pruebas unitarias.
+- Se agrego respaldo de base de datos (backup.sh) y certificados SSL (generate-ssl.sh).
+- Se actualizo la especificacion con todos los cambios (N.14-N.15).

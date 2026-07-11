@@ -1,10 +1,36 @@
 {
   "name": "criadero-camila-andrea-web",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
-    "test": "node tests/run-tests.mjs"
+    "dev:prisma": "node server-prisma.mjs",
+    "test": "node tests/run-tests.mjs",
+    "test:unit": "node tests/unit-tests.mjs",
+    "test:all": "node tests/run-tests.mjs && node tests/unit-tests.mjs",
+    "test:backend": "node --experimental-vm-modules node_modules/.bin/jest --config jest.config.mjs",
+    "test:backend:cov": "node --experimental-vm-modules node_modules/.bin/jest --config jest.config.mjs --coverage",
+    "test:e2e": "npx playwright test",
+    "db:migrate": "npx prisma migrate dev",
+    "db:seed": "node prisma/seed.mjs",
+    "db:studio": "npx prisma studio"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "jest": "^30.4.2",
+    "prisma": "^7.8.0",
+    "supertest": "^7.2.2",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.22.0"
   }
 }

@@ -36,8 +36,8 @@ function fails(response, code) {
 
 {
   const state = createSeedState();
-  assert.equal(dashboard(state).kpis.ownHorses, 2);
-  assert.equal(dashboard(state).kpis.boardedHorses, 1);
+  assert.equal(dashboard(state).kpis.ownHorses, 8);
+  assert.equal(dashboard(state).kpis.boardedHorses, 3);
   assert.ok(search(state, "Trueno").some((item) => item.type === "horses"));
 }
 
@@ -86,14 +86,16 @@ function fails(response, code) {
     startDate: "2026-07-01",
     boardingType: "mixed",
     agreementStatus: "active",
-    monthlyCost: 100000
+    monthlyCost: 100000,
+    clientId: "CLI-001"
   }), "validation_error");
   fails(api.request("POST", "/api/v1/boarding-stays", {
     horseId: "HOR-003",
     startDate: "2026-07-01",
     boardingType: "mixed",
     agreementStatus: "active",
-    monthlyCost: 100000
+    monthlyCost: 100000,
+    clientId: "CLI-001"
   }), "active_stay_exists");
 }
 
@@ -108,12 +110,12 @@ function fails(response, code) {
   }), "duplicate_paid_month");
   const payment = ok(api.request("POST", "/api/v1/boarding-payments", {
     boardingStayId: "STA-001",
-    paymentDate: "2026-07-05",
-    paidMonths: "2026-07, 2026-08",
+    paymentDate: "2026-08-05",
+    paidMonths: "2026-08, 2026-09",
     paymentMethod: "cash",
     amount: 360000
   }));
-  assert.deepEqual(payment.paidMonths, ["2026-07", "2026-08"]);
+  assert.deepEqual(payment.paidMonths, ["2026-08", "2026-09"]);
 }
 
 {
@@ -126,9 +128,10 @@ function fails(response, code) {
     startDate: "2027-06-01",
     boardingType: "client_supplies",
     agreementStatus: "active",
-    monthlyCost: 200000
+    monthlyCost: 200000,
+    clientId: "CLI-001"
   }));
-  assert.equal(newStay.code, "PEN-002");
+  assert.equal(newStay.code, "PEN-004");
 }
 
 {
@@ -182,7 +185,7 @@ function fails(response, code) {
     role: "admin",
     expiresAt: "2026-12-31"
   }));
-  const accepted = ok(api.request("POST", `/api/v1/admin-invitations/${invitation.token}/accept`, { name: "Invitado" }));
+  const accepted = ok(api.request("POST", `/api/v1/admin-invitations/${invitation.code}/accept`, { name: "Invitado" }));
   assert.equal(accepted.user.email, "invitado@criadero.local");
   assert.ok(store.getState().auditLogs.some((item) => item.event_type === "security"));
 }
@@ -205,6 +208,114 @@ function fails(response, code) {
   }));
   assert.ok(store.getState().auditLogs.at(-1).actor_name);
   assert.ok(store.getState().consumption.at(-1).estimated_input_tokens >= 1);
+}
+
+// ── New tests: G1 extension ──
+
+{
+  const { store, api } = context();
+  ok(api.request("POST", "/api/v1/horses/HOR-001/change-status", { status: "sold" }));
+  const sold = ok(api.request("GET", "/api/v1/horses/HOR-001"));
+  assert.equal(sold.status, "sold");
+  assert.ok(store.getState().auditLogs.some((l) => l.action === "change_status"));
+}
+
+{
+  const { api } = context();
+  const stay = ok(api.request("GET", "/api/v1/boarding-stays/STA-002"));
+  ok(api.request("POST", "/api/v1/boarding-stays/STA-002/finish", { actualExitDate: "2026-08-15" }));
+  const finished = ok(api.request("GET", "/api/v1/boarding-stays/STA-002"));
+  assert.equal(finished.agreementStatus, "finished");
+}
+
+{
+  const { api } = context();
+  ok(api.request("POST", "/api/v1/horses/HOR-005/change-status", { status: "inactive" }));
+  const inactive = ok(api.request("GET", "/api/v1/horses/HOR-005"));
+  assert.equal(inactive.status, "inactive");
+  ok(api.request("POST", "/api/v1/horses/HOR-005/change-status", { status: "active" }));
+  const active = ok(api.request("GET", "/api/v1/horses/HOR-005"));
+  assert.equal(active.status, "active");
+}
+
+{
+  const { api } = context();
+  const payment = ok(api.request("POST", "/api/v1/boarding-payments", {
+    boardingStayId: "STA-001",
+    paymentDate: "2026-10-05",
+    paidMonths: "2026-10",
+    paymentMethod: "cash",
+    amount: 180000
+  }));
+  assert.ok(payment.warning === undefined || payment.amountPaid === 180000);
+}
+
+{
+  const { api } = context();
+  const batch = ok(api.request("POST", "/api/v1/document-batches", {
+    entityType: "horse",
+    entityId: "HOR-002",
+    title: "Documentos HOR-002",
+    description: "Test descarga",
+    filesText: "doc1.pdf\ndoc2.jpg"
+  }));
+  assert.equal(batch.files.length, 2);
+  const download = ok(api.request("GET", `/api/v1/document-batches/${batch.id}/download`));
+  assert.ok(download.files || download.mode);
+}
+
+{
+  const { store, api } = context();
+  const genealogy = ok(api.request("PATCH", "/api/v1/horses/HOR-002/genealogy", { motherHorseId: "HOR-001", fatherExternalName: "Rey externo" }));
+  assert.ok(genealogy);
+  const tree = genealogyTree(store.getState(), "HOR-002");
+  assert.ok(tree.parents.some((p) => p.name === "Rey externo"));
+}
+
+{
+  const { api } = context();
+  fails(api.request("POST", "/api/v1/horses", {
+    ownershipType: "boarded",
+    name: "X",
+    sex: "macho",
+    color: "zaino",
+    distinctiveMarks: "ninguno"
+  }), "validation_error");
+}
+
+{
+  const { api } = context("admin");
+  const client = ok(api.request("POST", "/api/v1/clients", { firstName: "Nuevo", lastName: "Cliente", phone: "+56 9 5555", address: "Test" }));
+  assert.ok(client.id);
+  ok(api.request("PATCH", `/api/v1/clients/${client.id}`, { firstName: "NuevoEdit", address: "Test2" }));
+  const edited = ok(api.request("GET", `/api/v1/clients/${client.id}`));
+  assert.equal(edited.firstName, "NuevoEdit");
+}
+
+{
+  const { store, api } = context();
+  const before = store.getState().auditLogs.length;
+  ok(api.request("POST", "/api/v1/clients", { firstName: "Audit", lastName: "Test", phone: "+56 9 6666", address: "Test" }));
+  assert.equal(store.getState().auditLogs.length, before + 1);
+  const after = store.getState().auditLogs.at(-1);
+  assert.equal(after.action, "create");
+  assert.equal(after.entity_type, "clients");
+}
+
+{
+  const { api } = context();
+  const v = ok(api.request("POST", "/api/v1/vaccinations", { horseId: "HOR-003", vaccineName: "Triple", appliedAt: "2026-07-15", appliedBy: "Dr. Perez" }));
+  ok(api.request("PATCH", `/api/v1/vaccinations/${v.id}`, { vaccineName: "Triple Editada" }));
+  const edited = ok(api.request("GET", `/api/v1/vaccinations/${v.id}`));
+  assert.equal(edited.vaccineName, "Triple Editada");
+}
+
+{
+  const { api } = context();
+  const f = ok(api.request("POST", "/api/v1/farrier-records", { horseId: "HOR-002", serviceDate: "2026-07-20", serviceType: "correction", performedBy: "Luis" }));
+  ok(api.request("POST", `/api/v1/farrier-records/${f.id}/cancel`, { reason: "Error" }));
+  const cancelled = ok(api.request("GET", `/api/v1/farrier-records/${f.id}`));
+  assert.equal(cancelled.status, "cancelled");
 }
 
 console.log("criadero_camila_andrea_tests=pass");

@@ -1,0 +1,44 @@
+{
+  "work_order_id": "WO-CCA-MAINT-001",
+  "objective": "Mejoras y mantenimiento Criadero Camila Andrea v0.2.0 -> v1.0.0: conectar Prisma/PostgreSQL, JWT auth, integracion UI↔API, completar modulos faltantes, tests 90%/80%/E2E, CI/CD.",
+  "project_id": "Criadero Camila Andrea",
+  "project_version": "v0001",
+  "type": "factory_runtime",
+  "scope": "local_artifacts_only",
+  "side_effects": "no_external_writes_no_deploy",
+  "acceptance_criteria": [
+    "AC01: Servidor conectado a PostgreSQL via Prisma (no JSON file)",
+    "AC02: Autenticacion con bcrypt + JWT + refresh tokens + sesiones",
+    "AC03: UI usa fetch HTTP en lugar de localStorage para todas las operaciones",
+    "AC04: Health treatments, boarding supplies, client contacts, addresses implementados",
+    "AC05: Horse gallery separada de documentos (photo/boceto)",
+    "AC06: Feed inventory y notifications implementados",
+    "AC07: Validacion de meses duplicados en pagos en backend",
+    "AC08: Tests backend >90% coverage (Jest), frontend >80% (Vitest), E2E (Playwright)",
+    "AC09: Pipeline CI/CD GitHub Actions implementado",
+    "AC10: Sin secretos en codigo, sin borrado fisico, auditoria completa",
+    "AC11: PLANTILLA_FRONTEND vinculada (si aplica frontend web)"
+  ],
+  "authorized_sources": [
+    "project/Criadero Camila Andrea/especificacion_criadero_camila_andrea.md",
+    "project/Criadero Camila Andrea/work_order.json",
+    "project/Criadero Camila Andrea/web/"
+  ],
+  "approvals": {
+    "deploy": false,
+    "merge": false,
+    "external_api": false,
+    "secrets": false,
+    "infra": false,
+    "cost_increase": false
+  },
+  "budget": {
+    "tool_calls": 200,
+    "mcp_calls": 0,
+    "cost_usd": 0
+  },
+  "metadata": {
+    "session": "maint-001",
+    "cycles": ["core", "completeness", "quality"]
+  }
+}

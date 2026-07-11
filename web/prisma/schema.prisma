@@ -1,0 +1,573 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model UserRole {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true) @map("is_active")
+  users       User[]
+
+  @@map("user_roles")
+}
+
+model User {
+  id              String              @id @default(cuid())
+  firstName       String              @map("first_name")
+  lastName        String              @map("last_name")
+  email           String              @unique
+  passwordHash    String              @map("password_hash")
+  roleId          String              @map("role_id")
+  role            UserRole            @relation(fields: [roleId], references: [id])
+  status          String              @default("active")
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @updatedAt @map("updated_at")
+  sessions        UserSession[]
+  passwordReset   PasswordResetToken[]
+  preferences     UserPreference[]
+  invitationsSent AdminInvitation[]   @relation("createdByRelation")
+
+  @@map("users")
+}
+
+model UserSession {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  user         User     @relation(fields: [userId], references: [id])
+  token        String   @unique
+  refreshToken String?  @map("refresh_token")
+  expiresAt    DateTime @map("expires_at")
+  ipAddress    String?  @map("ip_address")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("user_sessions")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  user      User      @relation(fields: [userId], references: [id])
+  token     String    @unique
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("password_reset_tokens")
+}
+
+model UserPreference {
+  id             String @id @default(cuid())
+  userId         String @map("user_id")
+  user           User   @relation(fields: [userId], references: [id])
+  preferenceKey  String @map("preference_key")
+  preferenceValue String @map("preference_value")
+
+  @@unique([userId, preferenceKey])
+  @@map("user_preferences")
+}
+
+model AdminInvitation {
+  id          String   @id @default(cuid())
+  email       String
+  token       String   @unique
+  status      String   @default("pending")
+  expiresAt   DateTime @map("expires_at")
+  usedAt      DateTime? @map("used_at")
+  createdById String?  @map("created_by")
+  createdBy   User?    @relation("createdByRelation", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("admin_invitations")
+}
+
+model ClientStatus {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true) @map("is_active")
+  clients     Client[]
+
+  @@map("client_statuses")
+}
+
+model Client {
+  id              String           @id @default(cuid())
+  firstName       String           @map("first_name")
+  lastName        String           @map("last_name")
+  primaryAddressId String?          @map("primary_address_id")
+  primaryAddress  Address?         @relation("ClientPrimaryAddress", fields: [primaryAddressId], references: [id])
+  notes           String?
+  statusId        String           @map("status_id")
+  status          ClientStatus     @relation(fields: [statusId], references: [id])
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  contacts        ClientContact[]
+  addresses       Address[]        @relation("ClientAddresses")
+  horses          Horse[]
+  boardingStays   BoardingStay[]
+
+  @@map("clients")
+}
+
+model ClientContact {
+  id           String @id @default(cuid())
+  clientId     String @map("client_id")
+  client       Client @relation(fields: [clientId], references: [id])
+  contactType  String @map("contact_type")
+  value        String
+  notes        String?
+  isPrimary    Boolean @default(false) @map("is_primary")
+
+  @@map("client_contacts")
+}
+
+model Region {
+  id     String @id @default(cuid())
+  name   String
+  cities City[]
+
+  @@map("regions")
+}
+
+model City {
+  id       String @id @default(cuid())
+  regionId String @map("region_id")
+  region   Region @relation(fields: [regionId], references: [id])
+  name     String
+  addresses Address[]
+
+  @@map("cities")
+}
+
+model Address {
+  id        String  @id @default(cuid())
+  clientId  String  @map("client_id")
+  client    Client  @relation("ClientAddresses", fields: [clientId], references: [id])
+  street    String
+  cityId    String  @map("city_id")
+  city      City    @relation(fields: [cityId], references: [id])
+  postalCode String? @map("postal_code")
+  type      String  @default("main")
+  isPrimary Boolean @default(false) @map("is_primary")
+  primaryClients Client[] @relation("ClientPrimaryAddress")
+
+  @@map("addresses")
+}
+
+model HorseOwnershipType {
+  id     String @id @default(cuid())
+  code   String @unique
+  name   String
+  description String?
+  horses Horse[]
+
+  @@map("horse_ownership_types")
+}
+
+model HorseSex {
+  id     String @id @default(cuid())
+  code   String @unique
+  name   String
+  horses Horse[]
+
+  @@map("horse_sexes")
+}
+
+model HorseColor {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  horses      Horse[]
+
+  @@map("horse_colors")
+}
+
+model HorseBreed {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  horses      Horse[]
+
+  @@map("horse_breeds")
+}
+
+model HorseStatus {
+  id          String  @id @default(cuid())
+  horseType   String  @map("horse_type")
+  name        String
+  description String?
+  isActive    Boolean @default(true) @map("is_active")
+  sortOrder   Int     @default(0) @map("sort_order")
+  horses      Horse[]
+
+  @@map("horse_statuses")
+}
+
+model HorseGallery {
+  id          String   @id @default(cuid())
+  horseId     String   @map("horse_id")
+  horse       Horse    @relation(fields: [horseId], references: [id])
+  fileName    String   @map("file_name")
+  title       String?
+  description String?
+  type        String   @default("photo")
+  storagePath String   @map("storage_path")
+  uploadedBy  String   @map("uploaded_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("horse_gallery")
+}
+
+model HorseGenealogy {
+  id                   String  @id @default(cuid())
+  horseId              String  @unique @map("horse_id")
+  horse                Horse   @relation(fields: [horseId], references: [id])
+  fatherHorseId        String? @map("father_horse_id")
+  fatherHorse          Horse?  @relation("FatherHorse", fields: [fatherHorseId], references: [id])
+  motherHorseId        String? @map("mother_horse_id")
+  motherHorse          Horse?  @relation("MotherHorse", fields: [motherHorseId], references: [id])
+  fatherExternalName   String? @map("father_external_name")
+  motherExternalName   String? @map("mother_external_name")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@map("horse_genealogy")
+}
+
+model Horse {
+  id                String            @id @default(cuid())
+  ownershipTypeId   String            @map("ownership_type_id")
+  ownershipType     HorseOwnershipType @relation(fields: [ownershipTypeId], references: [id])
+  clientId          String?           @map("client_id")
+  client            Client?           @relation(fields: [clientId], references: [id])
+  name              String
+  sexId             String            @map("sex_id")
+  sex               HorseSex          @relation(fields: [sexId], references: [id])
+  colorId           String            @map("color_id")
+  color             HorseColor        @relation(fields: [colorId], references: [id])
+  breedId           String?           @map("breed_id")
+  breed             HorseBreed?       @relation(fields: [breedId], references: [id])
+  distinctiveMarks  String            @map("distinctive_marks")
+  notes             String?
+  breedingFarmName  String?           @map("breeding_farm_name")
+  birthDate         DateTime?         @map("birth_date")
+  breederName       String?           @map("breeder_name")
+  temporaryLocation String?           @map("temporary_location")
+  statusId          String            @map("status_id")
+  status            HorseStatus       @relation(fields: [statusId], references: [id])
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  gallery           HorseGallery[]
+  genealogy         HorseGenealogy?
+  childrenAsFather  HorseGenealogy[]  @relation("FatherHorse")
+  childrenAsMother  HorseGenealogy[]  @relation("MotherHorse")
+  vaccinations      Vaccination[]
+  farrierRecords    FarrierRecord[]
+  healthTreatments  HealthTreatment[]
+  boardingStays     BoardingStay[]
+  boardingPayments  BoardingPayment[]
+
+  @@map("horses")
+}
+
+model BoardingType {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  isActive    Boolean @default(true) @map("is_active")
+  stays       BoardingStay[]
+
+  @@map("boarding_types")
+}
+
+model AgreementStatus {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  sortOrder   Int     @default(0) @map("sort_order")
+  stays       BoardingStay[]
+
+  @@map("agreement_statuses")
+}
+
+model BoardingStaySupply {
+  id              String       @id @default(cuid())
+  boardingStayId  String       @map("boarding_stay_id")
+  boardingStay    BoardingStay @relation(fields: [boardingStayId], references: [id])
+  supplyId        String       @map("supply_id")
+  supply          Supply       @relation(fields: [supplyId], references: [id])
+  quantityPerMonth Float?      @map("quantity_per_month")
+  unit            String?
+  notes           String?
+
+  @@map("boarding_stay_supplies")
+}
+
+model BoardingStay {
+  id                String              @id @default(cuid())
+  horseId           String              @map("horse_id")
+  horse             Horse               @relation(fields: [horseId], references: [id])
+  clientId          String?             @map("client_id")
+  client            Client?             @relation(fields: [clientId], references: [id])
+  startDate         DateTime            @map("start_date")
+  estimatedEndDate  DateTime?           @map("estimated_end_date")
+  actualEndDate     DateTime?           @map("actual_end_date")
+  boardingTypeId    String              @map("boarding_type_id")
+  boardingType      BoardingType        @relation(fields: [boardingTypeId], references: [id])
+  customBoardingType String?            @map("custom_boarding_type")
+  agreementStatusId String              @map("agreement_status_id")
+  agreementStatus   AgreementStatus     @relation(fields: [agreementStatusId], references: [id])
+  boardingCost      Decimal?            @map("boarding_cost")
+  careNotes         String?             @map("care_notes")
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+  supplies          BoardingStaySupply[]
+  payments          BoardingPayment[]
+
+  @@map("boarding_stays")
+}
+
+model PaymentMethod {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  payments    BoardingPayment[]
+
+  @@map("payment_methods")
+}
+
+model PaymentStatus {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  payments    BoardingPayment[]
+
+  @@map("payment_statuses")
+}
+
+model BoardingPayment {
+  id              String        @id @default(cuid())
+  boardingStayId  String        @map("boarding_stay_id")
+  boardingStay    BoardingStay  @relation(fields: [boardingStayId], references: [id])
+  horseId         String        @map("horse_id")
+  horse           Horse         @relation(fields: [horseId], references: [id])
+  clientId        String?       @map("client_id")
+  paymentDate     DateTime      @map("payment_date")
+  paidMonths      Json          @map("paid_months")
+  paymentMethodId String        @map("payment_method_id")
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  amountPaid      Decimal       @map("amount_paid")
+  notes           String?
+  statusId        String        @map("status_id")
+  status          PaymentStatus @relation(fields: [statusId], references: [id])
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  @@map("boarding_payments")
+}
+
+model VaccinationStatus {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  vaccinations Vaccination[]
+
+  @@map("vaccination_statuses")
+}
+
+model Vaccination {
+  id              String             @id @default(cuid())
+  horseId         String             @map("horse_id")
+  horse           Horse              @relation(fields: [horseId], references: [id])
+  vaccineName     String             @map("vaccine_name")
+  applicationDate DateTime           @map("application_date")
+  appliedBy       String             @map("applied_by")
+  notes           String?
+  statusId        String             @map("status_id")
+  status          VaccinationStatus  @relation(fields: [statusId], references: [id])
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  @@map("vaccinations")
+}
+
+model FarrierRecordStatus {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name        String
+  description String?
+  records     FarrierRecord[]
+
+  @@map("farrier_record_statuses")
+}
+
+model FarrierRecord {
+  id              String              @id @default(cuid())
+  horseId         String              @map("horse_id")
+  horse           Horse               @relation(fields: [horseId], references: [id])
+  serviceDate     DateTime            @map("service_date")
+  description     String
+  notes           String?
+  statusId        String              @map("status_id")
+  status          FarrierRecordStatus @relation(fields: [statusId], references: [id])
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @updatedAt @map("updated_at")
+
+  @@map("farrier_records")
+}
+
+model HealthTreatment {
+  id              String   @id @default(cuid())
+  horseId         String   @map("horse_id")
+  horse           Horse    @relation(fields: [horseId], references: [id])
+  treatmentType   String   @map("treatment_type")
+  date            DateTime
+  description     String
+  performedBy     String?  @map("performed_by")
+  notes           String?
+  statusId        String   @map("status_id")
+  status          String   @default("active")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("health_treatments")
+}
+
+model Supply {
+  id          String               @id @default(cuid())
+  name        String
+  unit        String?
+  description String?
+  isActive    Boolean              @default(true) @map("is_active")
+  staySupplies BoardingStaySupply[]
+  feedEntries  FeedInventory[]
+
+  @@map("supplies")
+}
+
+model FeedInventory {
+  id         String   @id @default(cuid())
+  supplyId   String   @map("supply_id")
+  supply     Supply   @relation(fields: [supplyId], references: [id])
+  quantity   Float
+  unit       String?
+  entryDate  DateTime @map("entry_date")
+  expiryDate DateTime? @map("expiry_date")
+  notes      String?
+
+  @@map("feed_inventory")
+}
+
+model DocumentBatch {
+  id          String     @id @default(cuid())
+  entityType  String     @map("entity_type")
+  entityId    String     @map("entity_id")
+  name        String
+  description String?
+  status      String     @default("active")
+  uploadedBy  String     @map("uploaded_by")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  documents   Document[]
+
+  @@map("document_batches")
+}
+
+model FileFormat {
+  id        String   @id @default(cuid())
+  extension String   @unique
+  mimeType  String   @map("mime_type")
+  documents Document[]
+
+  @@map("file_formats")
+}
+
+model Document {
+  id           String        @id @default(cuid())
+  batchId      String        @map("batch_id")
+  batch        DocumentBatch @relation(fields: [batchId], references: [id])
+  fileName     String        @map("file_name")
+  displayName  String?       @map("display_name")
+  description  String?
+  mimeType     String        @map("mime_type")
+  fileSize     Int           @map("file_size")
+  storagePath  String?       @map("storage_path")
+  fileFormatId String?       @map("file_format_id")
+  fileFormat   FileFormat?   @relation(fields: [fileFormatId], references: [id])
+  status       String        @default("active")
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  @@map("documents")
+}
+
+model ImportanceLevel {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  name        String
+  description String?
+  logs        AuditLog[]
+
+  @@map("importance_levels")
+}
+
+model EventType {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  name        String
+  description String?
+  logs        AuditLog[]
+
+  @@map("event_types")
+}
+
+model AuditLog {
+  id           String     @id @default(cuid())
+  actorUserId  String     @map("actor_user_id")
+  actorName    String     @map("actor_name")
+  actorRole    String     @map("actor_role")
+  action       String
+  entityType   String     @map("entity_type")
+  entityId     String     @map("entity_id")
+  before       Json?
+  after        Json?
+  importanceId String     @map("importance_id")
+  importance   ImportanceLevel @relation(fields: [importanceId], references: [id])
+  eventTypeId  String     @map("event_type_id")
+  eventType    EventType  @relation(fields: [eventTypeId], references: [id])
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  @@map("audit_logs")
+}
+
+model SystemConfig {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+
+  @@map("system_config")
+}
+
+model NotificationLog {
+  id      String   @id @default(cuid())
+  type    String
+  message String
+  userId  String?  @map("user_id")
+  readAt  DateTime? @map("read_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notification_log")
+}

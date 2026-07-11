@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head><meta charset="UTF-8"><title>Test</title></head>
+<body style="background:#F1F4FA;font-family:sans-serif;padding:40px;">
+<h1>Si ves esto, el servidor funciona</h1>
+<script>
+  document.body.innerHTML += '<p>JS inline: OK</p>';
+</script>
+<script type="module">
+  document.body.innerHTML += '<p>JS module: OK</p>';
+  try {
+    const r = await fetch('/healthz');
+    const j = await r.json();
+    document.body.innerHTML += '<p>Fetch /healthz: ' + j.status + '</p>';
+  } catch(e) {
+    document.body.innerHTML += '<p>Fetch error: ' + e.message + '</p>';
+  }
+</script>
+</body>
+</html>

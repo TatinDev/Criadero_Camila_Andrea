@@ -1,0 +1,11 @@
+node_modules/
+tests/
+e2e/
+data/
+uploads/
+.git/
+*.md
+Dockerfile
+.dockerignore
+.DS_Store
+.gitignore

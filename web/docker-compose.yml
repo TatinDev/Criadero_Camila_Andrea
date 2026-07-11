@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: criadero_camila_andrea
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d criadero_camila_andrea"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 4177
+      NODE_ENV: production
+      DATA_FILE: /data/criadero-db.json
+      UPLOADS_DIR: /data/uploads
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/criadero_camila_andrea
+      JWT_SECRET: criadero-jwt-production-secret
+      SERVER_MODE: prisma
+    volumes:
+      - appdata:/data
+    ports:
+      - "4178:4177"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - app
+    volumes:
+      - ./deploy/nginx-criadero.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./deploy/ssl:/etc/nginx/ssl:ro
+    ports:
+      - "8080:80"
+      - "8443:443"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  appdata:

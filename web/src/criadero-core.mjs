@@ -6,32 +6,49 @@ export function createSeedState() {
   const state = {
     meta: { facilityId: "CRI-001", currentUserId: "USR-001" },
     users: [
-      { id: "USR-001", name: "Camila Andrea", email: "owner@criadero.local", role: "owner", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
-      { id: "USR-002", name: "Admin Interno", email: "admin@criadero.local", role: "admin", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
+      { id: "USR-001", firstName: "Camila", lastName: "Andrea", name: "Camila Andrea", email: "owner@criadero.local", role: "owner", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "USR-002", firstName: "Admin", lastName: "Interno", name: "Admin Interno", email: "admin@criadero.local", role: "admin", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
     ],
     adminInvitations: [
-      { id: "INV-001", email: "nuevo.admin@criadero.local", role: "admin", token: "invite-demo-admin", expiresAt: "2026-12-31", status: "pending", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
+      { id: "INV-001", email: "nuevo.admin@criadero.local", role: "admin", code: "invite-demo-admin", expiresAt: "2026-12-31", status: "pending", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
     ],
     clients: [
       { id: "CLI-001", firstName: "Valentina", lastName: "Rojas", fullName: "Valentina Rojas", phone: "+56 9 1111 1111", address: "Los Angeles, Chile", internalNotes: "Cliente con pension de invierno.", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
       { id: "CLI-002", firstName: "Martin", lastName: "Paredes", fullName: "Martin Paredes", phone: "+56 9 2222 2222", address: "Nacimiento, Chile", internalNotes: "Prefiere transferencia mensual.", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
     ],
     horses: [
-      { id: "HOR-001", ownershipType: "own", name: "Luna del Valle", sex: "hembra", color: "Alazan", distinctiveMarks: "Lucero blanco y calceta posterior.", status: "active", birthDate: "2021-09-10", breederName: "Criadero Camila Andrea", temporaryLocation: "", fatherExternalName: "Relampago", motherExternalName: "Estrella", notes: "Yegua propia para seguimiento genealogico.", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
-      { id: "HOR-002", ownershipType: "own", name: "Estrella", sex: "hembra", color: "Tordillo", distinctiveMarks: "Mancha clara en frente.", status: "retired", birthDate: "2015-03-02", breederName: "Criadero Camila Andrea", notes: "Madre registrada.", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
-      { id: "HOR-003", ownershipType: "boarded", name: "Trueno", sex: "macho", color: "Negro", distinctiveMarks: "Lista fina en cara.", clientId: "CLI-001", status: "in_stay", fatherExternalName: "Tornado", motherExternalName: "Bruma", notes: "Caballo de cliente bajo cuidado.", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
+      { id: "HOR-001", ownershipType: "own", name: "Luna del Valle", sex: "hembra", color: "Alazan", distinctiveMarks: "Lucero blanco y calceta posterior izquierda", status: "active", birthDate: "2021-09-10", breederName: "Criadero Camila Andrea", breederFarm: "Criadero Camila Andrea", temporaryLocation: "", motherHorseId: "HOR-002", notes: "Yegua propia para exposicion y cria", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-002", ownershipType: "own", name: "Estrella del Sur", sex: "hembra", color: "Tordillo", distinctiveMarks: "Mancha clara en la frente", status: "retired", birthDate: "2015-03-02", breederName: "Criadero Los Alamos", breederFarm: "Criadero Los Alamos", fatherExternalName: "Campeon", motherExternalName: "Perla", notes: "Madre fundadora del criadero", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-003", ownershipType: "boarded", name: "Trueno", sex: "macho", color: "Negro azabache", distinctiveMarks: "Lista blanca fina en cara y calcetin trasero derecho", clientId: "CLI-001", status: "in_stay", fatherExternalName: "Tornado", motherExternalName: "Bruma", notes: "Caballo de cliente, temperamento tranquilo", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-004", ownershipType: "own", name: "Relampago", sex: "macho", color: "Colorado", distinctiveMarks: "Estrella blanca en la frente", status: "active", birthDate: "2016-06-15", breederName: "Haras Santa Isabel", breederFarm: "Haras Santa Isabel", temporaryLocation: "", notes: "Semental principal del criadero", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-005", ownershipType: "own", name: "Brisa Marina", sex: "hembra", color: "Gris plateado", distinctiveMarks: "Mancha oscura en el anca derecha", status: "temporary_out", birthDate: "2023-12-01", breederName: "Criadero Camila Andrea", breederFarm: "Criadero Camila Andrea", temporaryLocation: "Clinica veterinaria San Jorge - post-operatorio", fatherHorseId: "HOR-004", motherHorseId: "HOR-002", notes: "Potranca nacida en el criadero, hija de Relampago y Estrella", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-006", ownershipType: "own", name: "Centella", sex: "macho", color: "Alazan tostado", distinctiveMarks: "Lucero y dos calcetas blancas", status: "sold", birthDate: "2020-04-22", breederName: "Criadero Camila Andrea", breederFarm: "Criadero Camila Andrea", fatherHorseId: "HOR-004", motherHorseId: "HOR-002", notes: "Vendido a Haras El Roble en 2024", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-007", ownershipType: "own", name: "Viento Norte", sex: "macho", color: "Negro", distinctiveMarks: "Sin marcas blancas", status: "deceased", birthDate: "2012-08-10", breederName: "Haras Santa Isabel", breederFarm: "Haras Santa Isabel", notes: "Fallecido por causas naturales en 2025. Semental historico", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-008", ownershipType: "boarded", name: "Canela", sex: "hembra", color: "Isabelo", distinctiveMarks: "Crin y cola clara", clientId: "CLI-002", status: "out_of_stay", fatherExternalName: "Volcan", notes: "Yegua de cliente que estuvo en pension 2025", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-009", ownershipType: "own", name: "Tormenta", sex: "hembra", color: "Tordillo oscuro", distinctiveMarks: "Mancha blanca irregular en el pecho", status: "in_treatment", birthDate: "2024-11-05", breederName: "Criadero Camila Andrea", breederFarm: "Criadero Camila Andrea", temporaryLocation: "Box de recuperacion", fatherHorseId: "HOR-004", motherHorseId: "HOR-001", notes: "En tratamiento por una lesion leve en el casco", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-010", ownershipType: "own", name: "Copihue", sex: "macho", color: "Bayo", distinctiveMarks: "Estrella pequena y hocico rosado", status: "active", birthDate: "2025-01-20", breederName: "Criadero Camila Andrea", breederFarm: "Criadero Camila Andrea", temporaryLocation: "", fatherHorseId: "HOR-004", motherHorseId: "HOR-001", notes: "Potro joven en entrenamiento basico", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "HOR-011", ownershipType: "boarded", name: "Fugitivo", sex: "macho", color: "Castano oscuro", distinctiveMarks: "Lista ancha y belfos blancos", clientId: "CLI-001", status: "in_stay", fatherExternalName: "Indomable", notes: "Segundo caballo de Valentina Rojas en pension", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
     ],
     boardingStays: [
       { id: "STA-001", code: "PEN-2026-001", horseId: "HOR-003", clientId: "CLI-001", startDate: "2026-06-01", estimatedExitDate: "2026-09-30", actualExitDate: "", boardingType: "mixed", otherTypeDescription: "", agreementStatus: "active", monthlyCost: 180000, hayBalesPerMonth: 8, oatsPerMonth: 2, otherSupplies: "Sal mineral", careNotes: "Revisar condicion corporal cada semana.", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "STA-002", code: "PEN-2026-002", horseId: "HOR-011", clientId: "CLI-001", startDate: "2026-07-01", estimatedExitDate: "2026-10-31", actualExitDate: "", boardingType: "included_supplies", otherTypeDescription: "", agreementStatus: "active", monthlyCost: 200000, hayBalesPerMonth: 10, oatsPerMonth: 3, otherSupplies: "Suplemento vitaminico", careNotes: "Ejercicio diario 1 hora", status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "STA-003", code: "PEN-2025-001", horseId: "HOR-008", clientId: "CLI-002", startDate: "2025-11-01", estimatedExitDate: "2026-03-31", actualExitDate: "2026-03-28", boardingType: "client_supplies", otherTypeDescription: "", agreementStatus: "finished", monthlyCost: 150000, hayBalesPerMonth: 6, oatsPerMonth: 1, careNotes: "Pension de verano completada", status: "finished", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
     ],
     boardingPayments: [
-      { id: "PAY-001", boardingStayId: "STA-001", horseId: "HOR-003", clientId: "CLI-001", paymentDate: "2026-06-05", paidMonths: ["2026-06"], paymentMethod: "transfer", amount: 180000, receiptReference: "TRX-100", observations: "Pago junio.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
+      { id: "PAY-001", boardingStayId: "STA-001", horseId: "HOR-003", clientId: "CLI-001", paymentDate: "2026-06-05", paidMonths: ["2026-06"], paymentMethod: "transfer", amount: 180000, receiptReference: "TRX-100", observations: "Pago junio.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "PAY-002", boardingStayId: "STA-001", horseId: "HOR-003", clientId: "CLI-001", paymentDate: "2026-07-02", paidMonths: ["2026-07"], paymentMethod: "transfer", amount: 180000, receiptReference: "TRX-115", observations: "Pago julio.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "PAY-003", boardingStayId: "STA-002", horseId: "HOR-011", clientId: "CLI-001", paymentDate: "2026-07-01", paidMonths: ["2026-07"], paymentMethod: "cash", amount: 200000, receiptReference: "", observations: "Pago en efectivo al inicio.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "PAY-004", boardingStayId: "STA-003", horseId: "HOR-008", clientId: "CLI-002", paymentDate: "2025-11-03", paidMonths: ["2025-11", "2025-12", "2026-01", "2026-02", "2026-03"], paymentMethod: "transfer", amount: 750000, receiptReference: "TRX-080", observations: "Pago total temporada.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
     ],
     vaccinations: [
-      { id: "VAC-001", horseId: "HOR-001", vaccineName: "Influenza equina", appliedAt: "2026-05-20", appliedBy: "Dra. Silva", observations: "Sin reaccion.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
+      { id: "VAC-001", horseId: "HOR-001", vaccineName: "Influenza equina", appliedAt: "2026-05-20", appliedBy: "Dra. Silva", observations: "Sin reaccion adversa.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "VAC-002", horseId: "HOR-004", vaccineName: "Tetano", appliedAt: "2026-06-10", appliedBy: "Dr. Martinez", observations: "Refuerzo anual.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "VAC-003", horseId: "HOR-010", vaccineName: "Encefalomielitis", appliedAt: "2026-04-15", appliedBy: "Dra. Silva", observations: "Primera dosis.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
     ],
     farrierRecords: [
-      { id: "FAR-001", horseId: "HOR-003", serviceDate: "2026-06-12", serviceType: "shoeing", performedBy: "Maestro Raul", observations: "Herradura completa.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
+      { id: "FAR-001", horseId: "HOR-003", serviceDate: "2026-06-12", serviceType: "shoeing", performedBy: "Maestro Raul", observations: "Herradura completa nuevo ciclo.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "FAR-002", horseId: "HOR-004", serviceDate: "2026-06-20", serviceType: "trim", performedBy: "Maestro Raul", observations: "Recorte y balanceo.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
+      { id: "FAR-003", horseId: "HOR-001", serviceDate: "2026-05-25", serviceType: "shoeing", performedBy: "Maestro Raul", observations: "Cambio de herraduras delanteras.", status: "valid", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS },
     ],
     documentBatches: [
       { id: "DOCB-001", entityType: "horse", entityId: "HOR-003", title: "Fotos de llegada", description: "Registro visual inicial.", files: [{ id: "DOC-001", name: "trueno-llegada.jpg", mime: "image/jpeg", sizeKb: 420 }], status: "active", createdAt: DETERMINISTIC_TS, updatedAt: DETERMINISTIC_TS }
@@ -104,6 +121,8 @@ export class CriaderoApi {
     if (normalized.startsWith("/users/") && normalized.endsWith("/activate") && method === "POST") return this.#changeStatus("users", idFrom(normalized, 1), "active");
     if (normalized.startsWith("/users/") && normalized.endsWith("/deactivate") && method === "POST") return this.#changeStatus("users", idFrom(normalized, 1), "inactive");
     if (normalized.startsWith("/admin-invitations/") && normalized.endsWith("/revoke") && method === "POST") return this.#changeStatus("adminInvitations", idFrom(normalized, 1), "revoked");
+    if (normalized.startsWith("/clients/") && normalized.endsWith("/activate") && method === "POST") return this.#changeStatus("clients", idFrom(normalized, 1), "active");
+    if (normalized.startsWith("/clients/") && normalized.endsWith("/deactivate") && method === "POST") return this.#changeStatus("clients", idFrom(normalized, 1), "inactive");
     if (normalized.startsWith("/admin-invitations/") && normalized.endsWith("/accept") && method === "POST") return this.#acceptInvitation(idFrom(normalized, 1), body);
     if (normalized.startsWith("/horses/") && normalized.endsWith("/change-status") && method === "POST") return this.#changeHorseStatus(idFrom(normalized, 1), body.status);
     if (normalized.startsWith("/horses/") && normalized.endsWith("/genealogy-tree") && method === "GET") return genealogyTree(this.store.getState(), idFrom(normalized, 1));
@@ -134,7 +153,7 @@ export class CriaderoApi {
     const user = this.store.getState().users.find((item) => item.email === body.email && item.status === "active");
     if (!user) throw apiError("auth_failed", "Usuario o invitacion no valida.");
     this.actor = user;
-    return { user, token: "local-session-" + user.id };
+    return { user, sessionId: "local-" + user.id };
   }
 
   #me() {
@@ -197,7 +216,7 @@ export class CriaderoApi {
       const item = findOrFail(state[collection], id);
       guardSoftDelete(state, collection, id);
       const before = clone(item);
-      item.status = "inactive";
+      item.status = "deleted";
       item.updatedAt = new Date().toISOString();
       audit(state, this.#actor(), collection, id, "soft_delete", before, item, "high", eventTypeFor(collection));
       return item;
@@ -208,6 +227,7 @@ export class CriaderoApi {
     const module = moduleForCollection(collection);
     if (module) this.#authorize(module.permission);
     return this.store.transact(this.#actor(), `status:${collection}:${status}`, (state) => {
+      if (status === "inactive") guardDeactivate(state, collection, id);
       const item = findOrFail(state[collection], id);
       const before = clone(item);
       item.status = status;
@@ -262,9 +282,9 @@ export class CriaderoApi {
     });
   }
 
-  #acceptInvitation(token, body) {
+  #acceptInvitation(code, body) {
     return this.store.transact({ id: "SYSTEM", name: "Sistema", role: "owner" }, "invitation.accept", (state) => {
-      const invitation = state.adminInvitations.find((item) => item.token === token || item.id === token);
+      const invitation = state.adminInvitations.find((item) => item.code === code || item.id === code);
       if (!invitation || invitation.status !== "pending" || invitation.expiresAt < today()) throw apiError("invalid_invitation", "Invitacion no valida o vencida.");
       const user = { id: nextId(state, "USR"), name: body.name, email: invitation.email, role: invitation.role, status: "active", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
       invitation.status = "accepted";
@@ -386,7 +406,7 @@ export function recalcAll(state) {
   for (const stay of state.boardingStays) {
     stay.code ||= "PEN-" + stay.id.split("-").at(-1);
     const horse = state.horses.find((item) => item.id === stay.horseId);
-    stay.clientId = horse?.clientId || stay.clientId;
+    stay.clientId = stay.clientId || horse?.clientId;
   }
   for (const payment of state.boardingPayments) {
     const stay = state.boardingStays.find((item) => item.id === payment.boardingStayId);
@@ -404,7 +424,7 @@ export function normalizeRecord(module, payload, state) {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
-  if (module.id === "adminInvitations") record.token = "invite-" + record.id.toLowerCase();
+  if (module.id === "adminInvitations") record.code = "invite-" + record.id.toLowerCase();
   if (module.id === "boardingStays") record.code = "PEN-" + record.id.split("-").at(-1);
   return record;
 }
@@ -471,6 +491,13 @@ export function validateDocumentBatch(payload) {
 export function guardSoftDelete(state, collection, id) {
   if (collection === "clients" && state.boardingStays.some((item) => item.clientId === id && item.agreementStatus === "active")) throw apiError("state_conflict", "No se puede inactivar cliente con pension activa.");
   if (collection === "horses" && state.boardingStays.some((item) => item.horseId === id && item.agreementStatus === "active")) throw apiError("state_conflict", "No se puede inactivar caballo con pension activa.");
+  if (collection === "horses" && state.horses.some((h) => h.id !== id && (h.fatherHorseId === id || h.motherHorseId === id) && h.status !== "deleted")) throw apiError("state_conflict", "No se puede eliminar este caballo porque es padre o madre de otro caballo registrado.");
+}
+
+export function guardDeactivate(state, collection, id) {
+  if (collection === "clients" && state.boardingStays.some((item) => item.clientId === id && item.agreementStatus === "active")) throw apiError("state_conflict", "No se puede inactivar cliente con pension activa.");
+  if (collection === "horses" && state.boardingStays.some((item) => item.horseId === id && item.agreementStatus === "active")) throw apiError("state_conflict", "No se puede inactivar caballo con pension activa.");
+  if (collection === "horses" && state.horses.some((h) => h.id !== id && (h.fatherHorseId === id || h.motherHorseId === id) && h.status !== "deleted")) throw apiError("state_conflict", "No se puede inactivar este caballo porque es padre o madre de otro caballo registrado. Se sugiere cambiar estado en vez de inactivar.");
 }
 
 export function filterAudit(state, params) {
@@ -487,12 +514,22 @@ export function parseMonths(value) {
 
 export function parseFiles(value, state = null) {
   if (Array.isArray(value)) return value;
-  return String(value || "").split(/\n/).map((name) => name.trim()).filter(Boolean).map((name) => ({
-    id: state ? nextId(state, "DOC") : "DOC-TMP",
-    name,
-    mime: mimeFor(name),
-    sizeKb: Math.max(1, Math.ceil(name.length * 3.5))
-  }));
+  return String(value || "").split(/\n/).map((raw) => raw.trim()).filter(Boolean).map((raw) => {
+    const parts = raw.split("::");
+    if (parts.length >= 3) return {
+      id: state ? nextId(state, "DOC") : "DOC-TMP",
+      name: parts[1],
+      storagePath: parts[0],
+      mime: parts[2],
+      sizeKb: Math.max(1, Math.ceil(parts[1].length * 3.5))
+    };
+    return {
+      id: state ? nextId(state, "DOC") : "DOC-TMP",
+      name: raw,
+      mime: mimeFor(raw),
+      sizeKb: Math.max(1, Math.ceil(raw.length * 3.5))
+    };
+  });
 }
 
 export function requireFields(payload, fields) {

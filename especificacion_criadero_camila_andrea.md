@@ -908,9 +908,27 @@ Validaciones:
 
 ## P-07 Ficha de caballo propio
 
-Muestra:
+Filtros en el listado previo (P-06):
 
-1. Datos generales.
+1. Busqueda por texto (nombre, color, distintivos, criador, ubicacion).
+2. Selector de tipo (propios, pensionados, todos).
+3. Selector de estado.
+4. Selector de sexo (hembra, macho, ambos).
+
+Columnas del listado:
+
+1. Nombre (con fecha de nacimiento).
+2. Tipo (propio/pensionado).
+3. Sexo.
+4. Color.
+5. Cliente (si es pensionado).
+6. Ubicacion (temporal o nombre del criadero).
+7. Estado.
+8. Acciones: Editar, Estado, Eliminar.
+
+Muestra en ficha:
+
+1. Datos generales: nombre, sexo, color, fecha nacimiento, nombre del criador, nombre del criadero, ubicacion temporal, estado.
 2. Notas.
 3. Fotos y bocetos.
 4. Documentos.
@@ -928,6 +946,7 @@ Acciones:
 5. Abrir P-25 Modal subir documentos.
 6. Navegar a P-19 Arbol genealogico.
 7. Navegar a P-20 Historial.
+8. Eliminar caballo (logico, con confirmacion y motivo). Si el caballo es padre/madre de otro, se bloquea la eliminacion y se sugiere cambiar estado.
 
 ## P-08 Listado de clientes
 
@@ -1129,16 +1148,22 @@ Modal que se abre desde P-13 Ficha de caballo pensionado o P-14 Ficha de pension
 
 Campos:
 
-1. Fecha de inicio.
-2. Fecha de salida estimada.
-3. Tipo de pension.
-4. Estado inicial del acuerdo.
-5. Costo Pension.
-6. Fardos acordados por mes.
-7. Avena acordada por mes.
-8. Otros insumos.
-9. Notas de cuidado.
-10. Documentos o fotos de llegada.
+1. Caballo pensionado (selector de caballos de tipo pensionado).
+2. Cliente dueño (selector de clientes activos, obligatorio).
+3. Fecha de inicio (obligatorio).
+4. Fecha de salida estimada (opcional).
+5. Tipo de pension (selector: "Insumos aportados por cliente", "Insumos incluidos por criadero", "Mixta", "Otro").
+6. Si tipo es "Otro", aparece campo adicional para describir el tipo.
+7. Estado inicial del acuerdo (selector: Activo, Pendiente de pago, Con deuda, Finalizado, Cancelado).
+8. Costo Pension (obligatorio).
+9. Fardos acordados por mes.
+10. Avena acordada por mes.
+11. Otros insumos.
+12. Notas de cuidado.
+13. Documentos o fotos de llegada (opcional, archivo).
+
+Columnas del listado de pensiones: Codigo, Caballo, Cliente, Inicio, Salida estimada, Tipo, Costo, Fardos/mes, Avena/mes, Estado, Acciones.
+Las pensiones se ordenan por fecha de inicio ascendente. Filtro por caballo disponible.
 
 Acciones:
 
@@ -1191,18 +1216,20 @@ Modal que se abre desde P-14 Ficha de pension/estadia.
 
 Campos:
 
-1. Fecha de pago.
-2. Meses pagados.
-3. Medio de pago: efectivo o transferencia.
-4. Monto pagado.
-5. Comprobante opcional.
-6. Observaciones.
+1. Pension (selector de pensiones existentes). Al seleccionar, se muestra automaticamente el costo sugerido (`boardingCost`, expuesto como `monthlyCost`) y el estado actual de la pension como referencia.
+2. Fecha de pago.
+3. Meses pagados (grilla de checkboxes por año, 2025-2028, 4 columnas x 3 filas). Al menos un mes obligatorio.
+4. Medio de pago: efectivo o transferencia.
+5. Monto pagado (el sistema sugiere el costo de la pension, el admin puede ajustarlo).
+6. Comprobante opcional (tipo archivo: imagen o PDF). Si se sube, se almacena en el servidor con referencia `storagePath::originalName::mimeType`.
+7. Observaciones.
 
 Acciones:
 
 1. Guardar.
 2. Cancelar.
 3. Subir comprobante.
+4. Al editar un pago con comprobante existente: se muestra nombre del archivo, vista previa (thumbnail) si es imagen, boton de descarga y opcion de reemplazar archivo. Si no se sube nuevo comprobante, se conserva el existente.
 
 Validaciones:
 
@@ -1210,19 +1237,26 @@ Validaciones:
 2. Al menos un mes pagado es obligatorio.
 3. Medio de pago es obligatorio.
 4. Monto pagado es obligatorio.
-5. Advertir si el mes ya fue pagado en la misma pension.
+5. Advertir y bloquear si el mes ya fue pagado en la misma pension (mensaje explicito con los meses duplicados).
+6. Advertir si la pension esta finalizada o cancelada.
+
+Visualizacion y descarga de comprobante:
+
+1. El endpoint `/api/v1/uploads/{storagePath}` sirve el archivo para descarga; `?inline=1` permite vista previa en navegador.
+2. Tabla de pagos: ordenada por fecha descendente, con filtros por pension y por estado (valido/anulado).
 
 ## P-18 Modal registrar vacuna
 
-Modal que se abre desde P-07 Ficha de caballo propio o P-13 Ficha de caballo pensionado.
+Modal que se abre desde P-07 Ficha de caballo propio, P-13 Ficha de caballo pensionado o desde el modulo de Sanidad.
 
 Campos:
 
-1. Nombre de vacuna.
-2. Fecha de aplicacion.
-3. Quien lo aplico.
-4. Observaciones.
-5. Documentos opcionales.
+1. Caballo (selector de todos los caballos, propio o pensionado).
+2. Nombre de la vacuna.
+3. Fecha de aplicacion.
+4. Quien lo aplico.
+5. Observaciones.
+6. Documentos opcionales (selector multiple de archivos).
 
 Acciones:
 
@@ -1235,30 +1269,34 @@ Validaciones:
 1. Nombre de vacuna es obligatorio.
 2. Fecha de aplicacion es obligatoria.
 3. Quien lo aplico es obligatorio.
+4. Caballo es obligatorio.
+
+Listado de vacunas: ordenado por fecha descendente, con filtro por caballo.
 
 ## P-19 Arbol genealogico
 
+Selector de caballo en la parte superior para elegir que arbol visualizar.
+
 Muestra:
 
-1. Caballo principal.
-2. Padre.
-3. Madre.
-4. Ascendencia disponible.
-5. Descendencia disponible.
-6. Nodos externos solo como texto.
+1. Caballo principal (nodo central).
+2. Padre (con etiqueta "Padre").
+3. Madre (con etiqueta "Madre").
+4. Ascendencia multinivel disponible (padres, abuelos, etc.).
+5. Descendencia disponible (hijos, nietos, etc.).
+6. Nodos externos solo como texto, sin ficha navegable.
 
 Acciones:
 
-1. Seleccionar padre.
-2. Seleccionar madre.
-3. Ingresar padre externo.
-4. Ingresar madre externa.
-5. Abrir ficha de caballo registrado desde el arbol.
+1. Boton "Editar padres": abre modal que permite asignar padre y madre, con toggle entre "registrado en el sistema" (selector de caballos filtrado por sexo) y "nombre externo" (campo de texto).
+2. Navegar a ficha de otro caballo registrado clickeando su nodo en el arbol.
+3. Los nodos de caballos registrados son clickeables; los nodos externos no.
 
 Validaciones:
 
 1. Padre y madre pueden quedar incompletos.
 2. Nodos externos no tienen ficha navegable.
+3. El selector de padre solo muestra machos; el de madre solo hembras.
 
 ## P-20 Historial / auditoria
 
@@ -1266,36 +1304,41 @@ Filtros:
 
 1. Fecha.
 2. Usuario administrador.
-3. Tipo de entidad.
-4. Accion.
+3. Tipo de entidad (selector de todos los tipos registrados).
+4. Accion (selector de todas las acciones registradas).
 
 Muestra:
 
 1. Fecha y hora.
-2. Usuario.
-3. Entidad afectada.
-4. Accion realizada.
-5. Valores anteriores y nuevos cuando corresponda.
-6. Motivo cuando exista.
+2. Usuario (con nombre y rol).
+3. Accion realizada.
+4. Entidad afectada (tipo:ID, clickeable para navegar al modulo correspondiente).
+5. Valores anteriores (`before`, truncados para no romper layout).
+6. Valores nuevos (`after`, truncados).
+7. Motivo cuando exista.
 
 Acciones:
 
-1. Consultar historial.
-2. Abrir entidad relacionada.
+1. Abrir entidad relacionada (click en la columna de entidad navega al modulo correspondiente: caballos, clientes, pensiones, pagos, sanidad, documentos, admin).
+2. Limpiar filtros.
+3. Ordenar por fecha.
+
+Los eventos se ordenan por fecha descendente. Los filtros de entidad y accion usan valores unicos extraidos de los datos existentes, no valores predefinidos.
 
 ## P-21 Administradores e invitaciones
 
-Muestra:
+Secciones separadas visualmente:
 
-1. Administradores activos.
-2. Invitaciones pendientes.
-3. Invitaciones usadas.
-4. Invitaciones vencidas.
+1. Administradores activos (tabla con nombre, email, rol, boton desactivar).
+2. Administradores inactivos (tabla con nombre, email, rol, estado, boton activar).
+3. Invitaciones pendientes (tabla con email, rol, codigo, fecha expiracion, botones Copiar link y Revocar).
+4. Invitaciones usadas (tabla informativa con email, rol, fecha de uso).
+5. Invitaciones vencidas/revocadas (tabla informativa).
 
 Acciones:
 
-1. Crear invitacion.
-2. Copiar link de invitacion.
+1. Crear invitacion (modal con campos: correo, rol [Administrador/Propietario], fecha expiracion). Al crear, se muestra el link de invitacion en el toast de confirmacion para copiarlo.
+2. Copiar link de invitacion (boton que copia la URL al portapapeles usando `navigator.clipboard`).
 3. Revocar invitacion.
 4. Activar o inactivar administrador.
 
@@ -1334,20 +1377,33 @@ Validaciones:
 
 ## P-23 Modal registrar herraje
 
-Modal que se abre desde P-07 Ficha de caballo propio o P-13 Ficha de caballo pensionado.
+Modal que se abre desde P-07 Ficha de caballo propio, P-13 Ficha de caballo pensionado o desde el modulo de Sanidad.
 
 Campos:
 
-1. Informacion del herraje.
-2. Fecha.
-3. Observaciones.
-4. Documentos opcionales.
+1. Caballo (selector de todos los caballos, propio o pensionado).
+2. Tipo de herraje (selector: Recorte, Herradura, Correccion, Otro).
+3. Fecha.
+4. Realizado por (obligatorio).
+5. Observaciones.
+6. Documentos opcionales (selector multiple de archivos).
 
 Acciones:
 
 1. Guardar.
 2. Cancelar.
 3. Subir documentos.
+4. Editar.
+5. Anular (solicita motivo).
+
+Validaciones:
+
+1. Caballo es obligatorio.
+2. Tipo de herraje es obligatorio.
+3. Fecha es obligatoria.
+4. Realizado por es obligatorio.
+
+Listado de herrajes: ordenado por fecha descendente, con filtro por caballo.
 
 Validaciones:
 
@@ -1378,27 +1434,40 @@ Validaciones:
 
 ## P-25 Modal subir documentos
 
-Modal que se abre desde P-07 Ficha de caballo propio, P-10 Ficha de cliente, P-13 Ficha de caballo pensionado o P-14 Ficha de pension/estadia, segun la entidad de origen.
+Modal que se abre desde P-07 Ficha de caballo propio, P-10 Ficha de cliente, P-13 Ficha de caballo pensionado, P-14 Ficha de pension/estadia o desde el modulo independiente de Documentos, segun la entidad de origen.
 
 Campos:
 
-1. Archivos.
-2. Nombre del conjunto documental.
-3. Descripcion del conjunto.
-4. Nombre individual opcional por archivo.
-5. Descripcion individual opcional por archivo.
+1. Tipo de entidad (selector: Caballo, Cliente, Pension, Pago, Vacuna, Herraje).
+2. Entidad (selector dinamico que carga las entidades del tipo seleccionado, mostrando nombre e ID).
+3. Nombre del conjunto documental (obligatorio).
+4. Descripcion del conjunto (opcional).
+5. Archivos (selector multiple de archivos, obligatorio, muestra lista de nombres y tamanos al seleccionar).
+6. Nombre individual opcional por archivo.
+7. Descripcion individual opcional por archivo.
 
 Acciones:
 
 1. Subir.
 2. Cancelar.
+3. Ver lote (modal solo lectura que muestra todos los datos, galeria de miniaturas de imagenes, y lista de archivos con botones de descarga y vista previa).
+4. Editar lote (solo permite modificar nombre y descripcion; entidad y archivos no se modifican).
+5. Anular lote (conserva trazabilidad e historial, solicita motivo).
+
+Visualizacion y descarga de archivos:
+
+1. Cada archivo muestra icono segun tipo (imagen/documento), nombre original, boton de descarga y boton de vista previa si es imagen.
+2. Las imagenes se muestran como miniaturas clickeables en el modal de vista.
+3. Los archivos se almacenan con formato `storagePath::originalName::mimeType` para preservar la ruta de descarga.
+4. El endpoint `/api/v1/uploads/{storagePath}` sirve cualquier archivo para descarga; `?inline=1` permite visualizacion en navegador.
 
 Validaciones:
 
 1. Nombre del conjunto documental es obligatorio.
 2. Al menos un archivo es obligatorio.
-3. Formato de archivo permitido.
-4. Tamaño de archivo no excede el maximo.
+3. Tipo de entidad y entidad son obligatorios.
+4. Formato de archivo permitido.
+5. Tamaño de archivo no excede el maximo.
 
 ## P-26 Modal editar caballo propio
 
@@ -1539,6 +1608,8 @@ Campos:
 1. Fecha de salida real.
 2. Fotos o documentos de salida opcionales.
 
+Previo a la confirmacion, el sistema calcula el total pagado vs el costo de la pension y muestra una advertencia si el monto pagado es menor al costo (posible deuda pendiente).
+
 Acciones:
 
 1. Confirmar finalizacion.
@@ -1548,6 +1619,7 @@ Validaciones:
 
 1. Fecha de salida real obligatoria.
 2. Fecha de salida no puede ser anterior a la fecha de inicio.
+3. Si existen pagos pendientes, advertir pero no bloquear.
 3. Advertir si existen pagos pendientes o deuda.
 
 ## P-32 Modal editar documento
@@ -3304,3 +3376,204 @@ Checklist para verificar que cada modulo del producto implementado cumple con lo
 5. CORS configurado para permitir solo el origen del frontend.
 6. Contraseñas almacenadas con hash (bcrypt o equivalente).
 7. Archivos subidos validados por tipo y tamaño antes de almacenar.
+
+---
+
+# N. Mejoras y Correcciones de Implementacion (v1.0.0)
+
+Documento vivo de lecciones aprendidas durante la construccion del MVP. Estas correcciones complementan la especificacion original y deben considerarse requisitos en cualquier reconstruccion futura del sistema.
+
+## N.1 Caballos
+
+- **N.1.1** El campo `distinctiveMarks` (Distintivos) es obligatorio para crear cualquier caballo (propio o pensionado).
+- **N.1.2** El formulario de registro/edicion debe incluir el campo `breedingFarmName` (Nombre del criadero) como campo opcional de texto. El backend almacena como `breedingFarmName` y expone tambien como `breederFarm` para compatibilidad.
+- **N.1.3** El formulario de registro debe permitir asignar estado al caballo en el momento de creacion (no solo mediante edicion posterior).
+- **N.1.4** El listado de caballos debe incluir filtros interactivos: busqueda por texto (nombre, color, distintivos, criador, ubicacion), selector de tipo (propios/pensionados/todos), selector de estado y selector de sexo.
+- **N.1.5** El listado debe mostrar columna de ubicacion (temporal o criadero), fecha de nacimiento y boton de eliminar (logico) visible.
+- **N.1.6** Si un caballo es padre o madre de otro caballo registrado, el sistema debe impedir su eliminacion o inactivacion. Se debe mostrar un mensaje sugiriendo cambiar el estado en vez de eliminar.
+- **N.1.7** Los selectores de padre/madre deben filtrar por sexo (macho para padre, hembra para madre) y excluir al caballo en edicion del listado.
+- **N.1.8** La creacion de caballos usa dos botones separados ("Nuevo propio" / "Nuevo pensionado") en vez de un unico boton con toggle de tipo. Cada boton abre un modal con los campos especificos de ese tipo, evitando problemas de validacion con formularios intercambiados dinamicamente.
+- **N.1.9** El campo del formulario se envia como `breedingFarmName` al backend (no `breederFarm`). El backend acepta ambos nombres pero normaliza a `breedingFarmName`.
+
+## N.2 Clientes
+
+- **N.2.1** El listado de clientes debe incluir barra de busqueda por nombre, apellido, telefono o direccion.
+- **N.2.2** Debe existir una ficha de detalle del cliente que muestre: datos personales, caballos bajo cuidado, pensiones asociadas y notas internas.
+- **N.2.3** No se puede inactivar un cliente que tenga pensiones activas (estado `active` o `payment_pending`). El sistema debe bloquear la accion con un mensaje explicativo. Esta validacion debe aplicarse tanto en el toggle de activar/inactivar del frontend como en el endpoint `POST /api/v1/clients/:id/deactivate` del backend.
+- **N.2.4** El listado debe mostrar columna con los caballos asociados al cliente.
+
+## N.3 Pensiones / Estadias
+
+- **N.3.1** El formulario de pension debe incluir campo `clientId` (Cliente dueno) como selector obligatorio, ademas de `horseId` (Caballo).
+- **N.3.2** Las etiquetas de tipos de pension deben usar los textos completos: "Insumos aportados por cliente" e "Insumos incluidos por criadero".
+- **N.3.3** Si el tipo de pension es "Otro", debe aparecer un campo adicional `otherDescription` para describir el tipo.
+- **N.3.4** La tabla de pensiones debe incluir columnas: Codigo, Caballo, Cliente, Inicio, Salida estimada, Tipo, Costo, Fardos/mes, Avena/mes, Estado. El codigo se genera como `PEN-XXXX` a partir del ID.
+- **N.3.5** Las pensiones deben ordenarse por fecha de inicio (ascendente).
+- **N.3.6** Debe existir filtro por caballo en el listado de pensiones.
+- **N.3.7** Al finalizar una pension, el sistema debe advertir si existen pagos pendientes (mostrando costo total vs monto pagado) antes de confirmar.
+- **N.3.8** El boton "Finalizar" debe estar disponible para pensiones en estado `active` y `payment_pending`.
+- **N.3.9** Las etiquetas de estados del acuerdo deben ser: "Activo", "Pendiente de pago", "Con deuda", "Finalizado", "Cancelado".
+- **N.3.10** El formulario de creacion y edicion debe incluir campos para adjuntar fotos de llegada y fotos de salida (opcionales, tipo archivo).
+- **N.3.11** El campo de costo en la BD se llama `boardingCost` (columna `boarding_cost`). El frontend puede enviar `monthlyCost` o `boardingCost`. El backend expone ambos como `boardingCost` y `monthlyCost`.
+
+## N.4 Pagos de estadia
+
+- **N.4.1** Al seleccionar la pension en el formulario de pago, debe mostrarse automaticamente el costo sugerido (`boardingCost` de la pension, expuesto tambien como `monthlyCost`) como referencia visual. Tambien debe mostrarse el estado actual de la pension para advertir si esta finalizada o cancelada.
+- **N.4.2** El campo de comprobante debe ser un `<input type="file">` que acepte imagenes y PDF, no un campo de texto. El archivo se sube al servidor y se almacena con referencia `storagePath::originalName::mimeType`.
+- **N.4.3** Al editar un pago con comprobante existente, debe mostrarse: nombre del archivo actual, vista previa si es imagen (thumbnail inline), boton de descarga y opcion de reemplazar el archivo.
+- **N.4.4** Si no se sube un nuevo comprobante al editar, se conserva el existente.
+- **N.4.5** Antes de guardar un pago, debe validarse que los meses seleccionados no hayan sido pagados previamente en la misma pension. Si hay duplicados, bloquear con mensaje explicito.
+- **N.4.6** La tabla de pagos debe ordenarse por fecha descendente e incluir filtros por pension y por estado (valido/anulado).
+- **N.4.7** El endpoint `/api/v1/uploads/{filename}` sirve cualquier archivo subido para descarga o visualizacion inline (`?inline=1`). Esta protegido contra path traversal.
+- **N.4.8** El upload de archivos retorna `{ id, originalName, fileName, storagePath, mimeType, sizeKb }`. El `storagePath` es el nombre real en disco y debe usarse para construir URLs de descarga.
+- **N.4.9** El campo de monto en la BD se llama `amountPaid` (columna `amount_paid`). El frontend puede enviar `amount` o `amountPaid`. El backend expone ambos como `amount` y `amountPaid` en las respuestas.
+
+## N.5 Sanidad (Vacunas y Herrajes)
+
+- **N.5.1** Los formularios de vacuna y herraje deben incluir campo opcional de subida de documentos (archivos multiples).
+- **N.5.2** Los listados de vacunas y herrajes deben ordenarse por fecha descendente.
+- **N.5.3** Debe existir filtro por caballo en la seccion de sanidad.
+- **N.5.4** El campo `performedBy` (Realizado por) en herrajes es requerido.
+- **N.5.5** El campo de fecha de vacuna en la BD se llama `applicationDate` (columna `application_date`). El frontend puede enviar `appliedAt` o `applicationDate`. El backend expone ambos como `applicationDate` y `appliedAt`.
+
+## N.6 Documentos
+
+- **N.6.1** El selector de entidad en el formulario de subida de documentos debe ser un dropdown con labels en espanol: Caballo, Cliente, Pension, Pago, Vacuna, Herraje.
+- **N.6.2** Al seleccionar el tipo de entidad, debe aparecer automaticamente un segundo dropdown con todas las entidades de ese tipo (ej: si selecciona Caballo, muestra lista de caballos con sus IDs).
+- **N.6.3** Cada archivo en un lote documental debe mostrar: icono segun tipo (imagen/documento), nombre del archivo, boton de descarga y boton de vista previa si es imagen.
+- **N.6.4** El modal "Ver lote" (solo lectura) debe mostrar: nombre del lote, entidad asociada con nombre real, estado, descripcion, galeria de miniaturas de imagenes y lista completa de archivos con links de descarga.
+- **N.6.5** Al seleccionar archivos en el formulario de subida, debe mostrarse una lista con los nombres y tamanos antes de confirmar.
+- **N.6.6** Los archivos subidos se almacenan con formato `storagePath::originalName::mimeType` en `filesText`, permitiendo reconstruir la ruta de descarga incluso si el archivo fue renombrado en disco.
+- **N.6.7** La tabla de lotes documentales debe mostrar el nombre real de la entidad asociada (ej: "Caballo: Luna del Valle"), no solo el ID.
+- **N.6.8** Debe existir un boton "Ver" que abre modal de solo lectura con toda la informacion del lote, y un boton "Editar" separado que solo permite modificar titulo y descripcion (los archivos y la entidad no se pueden cambiar una vez creado el lote).
+
+## N.7 Genealogia
+
+- **N.7.1** Debe existir un boton "Editar padres" en la vista de arbol genealogico que abra un modal para asignar padre y madre.
+- **N.7.2** El modal de edicion genealogica debe permitir: seleccionar padre/madre de caballos registrados (filtrados por sexo) o ingresar nombres externos, con toggle entre ambas opciones.
+- **N.7.3** Los nodos del arbol genealogico que corresponden a caballos registrados deben ser clickeables para navegar a su arbol.
+- **N.7.4** El arbol debe mostrar etiquetas "Padre" y "Madre" por separado (no como lista generica).
+- **N.7.5** La vista de arbol debe mostrar multiples niveles de ascendencia (padres, abuelos) cuando los datos esten disponibles.
+
+## N.8 Auditoria
+
+- **N.8.1** El listado de auditoria debe incluir filtros por tipo de entidad y por accion.
+- **N.8.2** Debe mostrar columnas: Fecha, Usuario (con rol), Accion, Entidad (con enlace navegable al modulo correspondiente), Valores anteriores (before), Valores nuevos (after) y Motivo.
+- **N.8.3** La columna de entidad debe ser clickeable y navegar al modulo correspondiente (caballos, clientes, pensiones, etc.).
+- **N.8.4** Los valores `before` y `after` deben truncarse para no romper el layout de la tabla.
+- **N.8.5** El modal de detalle de auditoria debe adaptar su contenido segun el tipo de accion:
+  - **create / register**: Mustra "Registro creado" con los campos clave del objeto creado (nombre, tipo, monto, etc.), omitiendo IDs internos y timestamps.
+  - **update**: Mustra tabla comparativa "Campos modificados" listando solo los campos que cambiaron entre `before` y `after`, con columna de Antes (rojo) y Despues (verde). Si no hay diferencias, mustra "Sin cambios detectados."
+  - **cancel / delete / anular**: Mustra "Registro anulado/eliminado" con el motivo destacado en cuadro de color danger.
+  - **change_status / activate / deactivate / reactivate**: Mustra transicion de estado con badges visuales (ej: "Inactivo → Activo") y motivo si existe.
+  - **finish**: Mustra "Pension finalizada" con fecha de salida real si esta disponible.
+  - **create_invitation / accept_invitation**: Mustra email invitado y rol.
+  - **login / logout**: Mustra mensaje simple de inicio/cierre de sesion.
+  - Acciones no categorizadas: mustra raw JSON de `before` y `after` como fallback.
+- **N.8.6** Todas las acciones `create` en el backend deben pasar el objeto creado como parametro `after` en `auditPayload()`.
+- **N.8.7** Todas las acciones `update` deben pasar `before` y `after` completos para poder calcular diferencias.
+- **N.8.8** Las acciones `cancel`, `delete` y `deactivate` deben pasar `{ reason }` como `after`.
+
+## N.9 Administradores
+
+- **N.9.1** La seccion de administradores debe separar visualmente administradores activos de inactivos.
+- **N.9.2** Las invitaciones deben agruparse por estado: Pendientes, Usadas y Vencidas/Revocadas.
+- **N.9.3** El formulario de invitacion debe incluir selector de rol (Administrador o Propietario).
+- **N.9.4** Cada invitacion pendiente debe mostrar su codigo y tener un boton "Copiar link" que copie la URL de invitacion al portapapeles.
+- **N.9.5** Al crear una invitacion, debe mostrarse el link generado en el toast de confirmacion.
+
+## N.10 Buscador global
+
+- **N.10.1** Debe incluir selector de tipo de entidad para filtrar resultados: Todos, Caballos, Clientes, Pensiones, Documentos.
+- **N.10.2** Los resultados deben agruparse visualmente por tipo de entidad con encabezados de seccion.
+- **N.10.3** Cada resultado debe ser clickeable para navegar al modulo correspondiente.
+- **N.10.4** Debe existir boton "Limpiar" para resetear la busqueda y filtros.
+
+## N.11 Dashboard
+
+- **N.11.1** Debe exportar funcion `bind()` con event listeners para que los KPIs y enlaces sean interactivos.
+- **N.11.2** Las secciones de salud deben estar separadas: "Ultimas vacunas" y "Ultimos herrajes" como tarjetas independientes.
+- **N.11.3** Los KPIs deben ser clickeables y navegar al modulo correspondiente (ej: click en "Caballos propios" navega a Caballos).
+- **N.11.4** Las tablas de "Pensiones activas" y "Actividad reciente" deben tener enlaces navegables.
+- **N.11.5** El endpoint `/api/v1/dashboard/summary` debe devolver KPIs con: `ownHorses`, `boardedHorses`, `clients`, `activeStays`, `pendingStays`/`dueStays`, `paymentsTotal`. Ademas debe devolver `latestStays` (datos de pensiones activas, no pagos) para la tabla de pensiones activas.
+- **N.11.6** Las vacunas en el dashboard deben usar `applicationDate` (columna real en BD) para ordenamiento y visualizacion, con fallback a `appliedAt` si existe.
+
+## N.12 Backend: Guardas de integridad
+
+- **N.12.1** `guardSoftDelete`: Ademas de verificar pensiones activas, debe verificar que el caballo no sea padre/madre de otro caballo registrado antes de permitir eliminacion.
+- **N.12.2** `guardDeactivate` (nueva): Misma logica que `guardSoftDelete` pero especifica para cambios de estado a `inactive`. Se invoca desde `#changeStatus` cuando el nuevo estado es "inactive", cubriendo tanto el toggle de activar/inactivar como cambios programaticos de estado.
+- **N.12.3** Ambas guardas deben retornar mensajes de error descriptivos en espanol indicando la razon del bloqueo.
+
+## N.13 UI/UX general
+
+- **N.13.1** Todos los selects que muestran codigos internos (ej: `horse`, `client_supplies`, `active`) deben usar etiquetas en espanol legibles mediante `statusLabel()`.
+- **N.13.2** Los modales de formulario deben tener la clase `wide` (680px) cuando contengan muchos campos o grillas de meses.
+- **N.13.3** Los elementos `.genealogy-box` y `.month-label` deben tener estilos que prevengan saltos de layout al hacer hover (transiciones suaves, tamanos fijos).
+- **N.13.4** Las URLs de descarga de archivos deben apuntar a `/api/v1/uploads/{storagePath}` para descarga forzada, y `/api/v1/uploads/{storagePath}?inline=1` para vista previa en navegador.
+- **N.13.5** El formato de almacenamiento de referencias a archivos es `storagePath::originalName::mimeType` separado por `::`, lo que permite reconstruir tanto la ruta de descarga como el nombre original para mostrar al usuario.
+
+## N.14 Bugs corregidos
+
+- **N.14.1** Genealogia fuera del formulario: los selectores de padre/madre deben estar dentro de `<div class="genealogy-box">` con la clase CSS correspondiente para evitar que se salgan del contenedor del modal.
+- **N.14.2** Toggle cliente sin ruta: los endpoints `POST /api/v1/clients/:id/activate` y `POST /api/v1/clients/:id/deactivate` deben existir en el backend.
+- **N.14.3** 401 rompia re-login: el cliente HTTP debe manejar errores 401 redirigiendo al login sin perder el estado.
+- **N.14.4** Modal `await onSave`: el handler de guardado del modal debe ser `async` y esperar la promesa antes de cerrar el modal.
+- **N.14.5** Dashboard IDs por nombres: los KPIs deben mostrar nombres de caballos y clientes, no solo IDs.
+- **N.14.6** Duplicados en `statusLabel`: la funcion de labels debe tener entradas unicas sin sobrescribir valores.
+- **N.14.7** `clientName` vs `fullName`: usar consistentemente `fullName` (firstName + lastName concatenados) en todo el sistema.
+- **N.14.8** `escapeHTML` en auditoria: todos los valores mostrados en la tabla de auditoria deben pasarse por `escapeHtml()`.
+- **N.14.9** `filesText` required: el campo de archivos en lotes documentales debe validar que al menos un archivo fue subido antes de crear el lote.
+- **N.14.10** Search array check: verificar que `results` sea un array antes de iterarlo.
+- **N.14.11** Client activate/deactivate routes: las rutas deben estar registradas en el router del backend.
+- **N.14.12** Receipt no se mostraba al editar pago: el modal de edicion de pago debe mostrar el comprobante existente (nombre, preview y descarga) y preservarlo si no se sube uno nuevo.
+- **N.14.13** Invitaciones: link generado como `?invite=TOKEN` (query string) pero `isAcceptInvite()` leia `window.location.hash` (`#invite=`) — nunca coincidian. Corregido para usar `URLSearchParams(window.location.search)`.
+- **N.14.14** Invitaciones: `admin.mjs` usaba `res.code || res.id` como token pero el backend devuelve `res.token` — el link de invitacion siempre era invalido. Corregido a `res.token || res.code || res.id`.
+- **N.14.15** Invitaciones: limpieza de URL tras aceptar usaba `window.location.hash = ""` (no limpia query string). Corregido a `window.history.replaceState({}, "", origin)`.
+- **N.14.16** Invitaciones: `acceptInvitation` devolvia `role: { id, code, name }` (objeto) en vez de `role: "admin"` (string). Flattened a `role: user.role?.code`.
+- **N.14.17** Pagos: `p.amount` siempre `undefined` porque la BD almacena como `amountPaid`. Todos los valores se mostraban como `$0`. Corregido a `p.amount ?? p.amountPaid` en frontend y alias `amount: p.amountPaid` en backend.
+- **N.14.18** Vacunas: `v.appliedAt` siempre `undefined` porque la BD almacena como `applicationDate`. Fechas en blanco en modulo salud y dashboard. Corregido en frontend a `v.applicationDate` y backend expone `appliedAt: v.applicationDate`.
+- **N.14.19** Pensiones: `s.monthlyCost` siempre `undefined` porque la BD almacena como `boardingCost`. Costos siempre `$0`. Corregido en frontend a `s.boardingCost` y backend expone `monthlyCost: s.boardingCost`.
+- **N.14.20** Caballos: `h.breederFarm` siempre `undefined` porque la BD almacena como `breedingFarmName`. Columna "Criadero" siempre "-". Corregido a `h.breedingFarmName` y backend expone `breederFarm: h.breedingFarmName`.
+- **N.14.21** Dashboard: renderizaba `summary.latestPayments` (pagos) como si fueran pensiones activas, mostrando datos incorrectos (sin code, cost, agreementStatus). Corregido: backend devuelve `latestStays` con datos reales de pensiones activas, frontend usa `summary.latestStays`.
+- **N.14.22** Dashboard KPIs: faltaban `clients`, `dueStays`, `paymentsTotal` — KPIs mostraban "undefined". Agregados al backend en `dashboard()`.
+- **N.14.23** `cancelHealthTreatment`: solo creaba audit log sin actualizar el registro. Corregido agregando `db.healthTreatment.update({ data: { statusId: "cancelled", status: "cancelled" } })`.
+- **N.14.24** `createHealthTreatment` no normalizaba `data.date` con fallback a `data.applicationDate`. Corregido a `new Date(data.date || data.applicationDate)`.
+- **N.14.25** Genealogia: `tree.name` no existia (el API devuelve `tree.horse.name`). Corregido a `tree.horse?.name || tree.name || ""`.
+- **N.14.26** Genealogia: faltaba `await` antes de `render()` en click handler de nodo del arbol, causando `innerHTML = "[object Promise]"`. Corregido haciendo el handler `async`.
+- **N.14.27** Genealogia: `getGenealogyTree()` no incluia hijos ni descendientes en la respuesta. Agregada query de hijos via `HorseGenealogy.findMany({ where: { OR: [{ fatherHorseId }, { motherHorseId }] } })`.
+- **N.14.28** `listHorses()` no incluia `genealogy` en el `include` — padre/madre siempre en blanco al editar. Agregado `include: { genealogy: true }`.
+- **N.14.29** `updateHorse` ignoraba `ownershipType` y campos genealogicos en el payload. Agregado manejo de `data.ownershipType` y actualizacion de tabla `HorseGenealogy`.
+- **N.14.30** Admin usuarios: `listUsers()` devuelve `firstName`+`lastName` pero frontend leia `u.name`. Corregido a `u.firstName + " " + u.lastName`.
+- **N.14.31** `listBoardingStays()` no incluia `code` — codigos de pension siempre en blanco. Agregado `code` generado a partir del ID.
+- **N.14.32** `validateForm` y `liveValidate` en modales: usaban listeners directos en elementos del DOM que se perdian al reemplazar innerHTML (ej: toggle de tipo caballo). Corregido con delegacion de eventos en el formulario via `formEl.addEventListener("input", handler)`.
+- **N.14.33** Modal de creacion de caballo: el toggle Propio/Pensionado reemplazaba campos con innerHTML pero los nuevos campos no tenian validacion activa ni el boton guardar se habilitaba. Corregido separando en dos botones independientes ("Nuevo propio" / "Nuevo pensionado") con formularios fijos desde el inicio, eliminando el toggle dinamico.
+- **N.14.34** Auditoria: `create*` no registraba el objeto creado como `after`. Todos los metodos `create` ahora pasan el objeto creado a `auditPayload()`. Ademas `updateVaccination`, `updateFarrierRecord` y `updateHealthTreatment` ahora capturan `before/after` completos.
+- **N.14.35** Modal de detalle de auditoria: antes mostraba raw JSON de `before`/`after`. Ahora adapta su contenido segun la accion: "create" mustra campos clave del objeto creado, "update" mustra tabla diff de solo cambios, "cancel/delete" mustra motivo destacado, "change_status" mustra transicion de estado con badges, "finish" mustra fecha de salida, "create_invitation/accept_invitation" mustra email, "login/logout" mustra mensaje simple.
+- **N.14.36** Modulo de configuracion del sistema: creado `modules/config.mjs` con formulario de parametros (expiracion invitaciones, tamaño maximo archivos, etc.). Ruta protegida para owner via nav item "Config" con `ownerOnly: true`.
+- **N.14.37** Galeria de fotos en ficha de caballo: agregada seccion de miniaturas (80x80) en el modal de detalle, con fetch a `GET /api/v1/horses/{id}/gallery`.
+- **N.14.38** Modulo de catalogos: creado `modules/catalogs.mjs` con selector de 12 catalogos, tabla de entradas, y modales de crear/editar via `POST` y `PATCH /api/v1/catalogs/{name}[/{id}]`. Solo accesible por owner.
+
+## N.15 Correcciones de infraestructura y seguridad (Pase de auditoria)
+
+- **N.15.1** `guardSoftDelete` en `criadero-core.mjs` usaba `status: "inactive"` pero el filtro `#list` y `findOrFail` verificaban `status === "deleted"`. Corregido para usar `status: "deleted"` consistentemente.
+- **N.15.2** Campo `breedingFarmName` (Nombre del criadero) agregado a la definicion del modulo `horses` en `domain.mjs`. Antes solo existia en seed data y frontend, siendo silenciosamente descartado por `normalizeByFields`. El frontend puede usar `breederFarm` o `breedingFarmName`.
+- **N.15.3** Campo `clientId` agregado como requerido en la definicion del modulo `boardingStays` en `domain.mjs`. Antes era descartado por `normalizeByFields` y sobrescrito por `recalcAll`.
+- **N.15.4** `recalcAll` corregido para que `stay.clientId = stay.clientId || horse?.clientId` (antes `horse?.clientId || stay.clientId`), respetando el valor elegido por el usuario.
+- **N.15.5** `saveUpload` en `server.mjs` ahora valida extensiones permitidas (`.jpg`, `.jpeg`, `.png`, `.gif`, `.svg`, `.pdf`, `.doc`, `.docx`, `.xls`, `.xlsx`, `.txt`, `.csv`) y limite de tamano de archivo (10 MB).
+- **N.15.6** `readBody` en `server.mjs` ahora limita el tamano del body a 10 MB y destruye la conexion si se excede.
+- **N.15.7** Funcion `safePath` implementada para prevenir path traversal en todas las rutas de descarga de archivos (`/api/v1/uploads/`, `/api/v1/documents/`, `/api/v1/document-batches/`).
+- **N.15.8** `handleStatic` protegido con `decodeURIComponent` en try-catch para evitar crash por URLs maliciosas con encoding invalido. Rutas resueltas con `safePath`.
+- **N.15.9** El handler HTTP principal (`createServer`) ahora tiene try-catch global que retorna 500 en caso de error inesperado, evitando que el cliente quede colgado.
+- **N.15.10** Los streams `createReadStream` para descarga de archivos ahora tienen handler `.on("error")` que retorna 500 sin dejar la conexion abierta.
+- **N.15.11** Headers CORS (`access-control-allow-origin: *`) agregados a todas las respuestas de archivos estaticos y descargas, no solo a `jsonResponse`.
+- **N.15.12** `JsonFileStorage.write` ahora tiene try-catch con limpieza de archivo temporal y mensaje de error descriptivo.
+- **N.15.13** Variable CSS `--warning` agregada en `styles.css` (antes solo existia `--warn`, rompiendo el color de advertencia en el modal de finalizar pension).
+- **N.15.14** Dockerfile mejorado: healthcheck usa Node.js nativo en vez de `wget` (no incluido en Alpine), se ejecuta como usuario `node` no-root, se agrego `.dockerignore`.
+- **N.15.15** Import `money` faltante en `clients.mjs` corregido (causaba `ReferenceError` en la ficha de cliente). Imports no utilizados limpiados en `horses.mjs` y `documents.mjs`.
+- **N.15.16** Conflicto de atributo `data-nav` entre `dashboard.mjs` y `app.mjs` resuelto: dashboard ahora usa `data-dash-nav`.
+- **N.15.17** Re-exports sin uso eliminados de `app.mjs`. Import `formFieldsHtml` removido de `documents.mjs`. Import `money` removido de `horses.mjs`.
+- **N.15.18** CORS hardening: reemplazadas 4 ocurrencias de `access-control-allow-origin: "*"` por la variable `corsOrigin` (configurable via env `CORS_ORIGIN`, default `http://localhost:4178`).
+- **N.15.19** Permisos (PERM_MAP): `checkPerm` reescrito para soportar wildcards (`*`) en las rutas, dividiendo el patron por `*`, escapando cada parte como regex y uniendo con `[^/]+`. Antes los wildcards nunca matcheaban y las rutas protegidas estaban abiertas a todos.
+- **N.15.20** Backup script: `backup.sh` para respaldo de PostgreSQL via `docker compose exec db pg_dump`, comprimido con gzip, con instrucciones de restauracion.
+- **N.15.21** HTTPS en nginx: configuracion con redireccion 301 de HTTP a HTTPS, sertificado SSL autofirmado generado por `generate-ssl.sh`, puerto 8443 en docker-compose.
+- **N.15.22** Import `crypto from "node:crypto"` agregado a `prisma-api.mjs` — sin esto, `passwordRecovery()` lanzaba ReferenceError por usar `crypto.randomUUID()` sin import.

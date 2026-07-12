@@ -36,4 +36,4 @@ VOLUME ["/data"]
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://127.0.0.1:4177/healthz',r=>{process.exit(r.statusCode===200?0:1)})"
 
-CMD ["sh", "-c", "if [ \"$SERVER_MODE\" = \"prisma\" ]; then npx prisma migrate deploy && node server-prisma.mjs; else node server.mjs; fi"]
+CMD ["sh", "-c", "npx prisma migrate deploy; node prisma/seed.mjs; node server-prisma.mjs"]

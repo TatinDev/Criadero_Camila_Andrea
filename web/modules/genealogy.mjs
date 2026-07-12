@@ -1,5 +1,5 @@
 import { api } from "../api.mjs";
-import { escapeHtml, toast, modal } from "../components/ui.mjs";
+import { escapeHtml, statusLabel, toast, modal } from "../components/ui.mjs";
 
 let horses = [];
 let selectedId = null;
@@ -14,7 +14,8 @@ export async function render() {
     tree = await api("GET", `/api/v1/horses/${selectedId}/genealogy-tree`);
   }
 
-  const ownHorses = horses.filter((h) => h.ownershipType === "own");
+  const allHorses = [...horses]
+    .sort((a, b) => (a.ownershipType === "own" ? 0 : 1) - (b.ownershipType === "own" ? 0 : 1));
   const selHorse = horses.find((h) => h.id === selectedId);
 
   return `
@@ -23,7 +24,7 @@ export async function render() {
         <div style="display:flex;gap:12px;align-items:center;">
           <h2>Arbol genealogico</h2>
           <select id="genealogy-select" style="padding:8px 12px;border:1.5px solid var(--border-2);border-radius:11px;background:var(--surface-2);font-size:14px;">
-            ${ownHorses.map((h) => `<option value="${h.id}" ${h.id === selectedId ? "selected" : ""}>${escapeHtml(h.name)}</option>`).join("")}
+            ${allHorses.map((h) => `<option value="${h.id}" ${h.id === selectedId ? "selected" : ""}>${escapeHtml(h.name)} (${statusLabel(h.ownershipType)})</option>`).join("")}
           </select>
         </div>
         ${selHorse ? `<button class="btn primary" id="btn-edit-genealogy">Editar padres</button>` : ""}

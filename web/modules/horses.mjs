@@ -1,12 +1,12 @@
 import { api } from "../api.mjs";
 import { escapeHtml, statusLabel, statusClass, toast, modal, formFieldsHtml, dateLocale, money } from "../components/ui.mjs";
 
-let horses = [], clients = [], filters = { search: "", type: "all", status: "all", sex: "all" }, showInactive = false;
+let horses = [], clients = [], colors = [], filters = { search: "", type: "all", status: "all", sex: "all" }, showInactive = false;
 
 const commonFields = [
   { name: "name", label: "Nombre", type: "text", required: true },
   { name: "sex", label: "Sexo", type: "select", options: ["hembra", "macho"], required: true },
-  { name: "color", label: "Color", type: "text", required: true },
+  { name: "color", label: "Color", type: "select", options: [], required: true },
   { name: "birthDate", label: "Fecha de nacimiento", type: "date" },
   { name: "breederName", label: "Nombre del criador", type: "text" },
   { name: "breedingFarmName", label: "Nombre del criadero", type: "text" },
@@ -38,6 +38,9 @@ export async function render() {
   horses = Array.isArray(hRes) ? hRes : [];
   const cRes = await api("GET", "/api/v1/clients");
   clients = Array.isArray(cRes) ? cRes : [];
+  const colRes = await api("GET", "/api/v1/catalogs/horse-colors");
+  colors = Array.isArray(colRes) ? colRes : [];
+  commonFields.find((f) => f.name === "color").options = colors.map((c) => ({ value: c.code || c.name, label: c.name || c.code }));
 
   const filtered = horses.filter((h) => {
     if (filters.type === "own" && h.ownershipType !== "own") return false;

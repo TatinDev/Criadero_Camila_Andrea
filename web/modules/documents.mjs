@@ -152,6 +152,7 @@ function showCreate() {
   const overlay = modal("Subir documentos", html, async (fd) => {
     const form = overlay.querySelector("form");
     const payload = { title: fd.get("title"), description: fd.get("description"), entityType: fd.get("entityType"), entityId: fd.get("entityId") };
+    if (payload.entityType && !payload.entityId) { toast("Debe seleccionar una entidad especifica del tipo elegido"); return; }
     const fileInput = form?.querySelector('input[type="file"]');
     const entries = [];
     if (fileInput?.files?.length > 0) {

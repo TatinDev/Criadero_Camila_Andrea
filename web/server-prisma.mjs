@@ -417,7 +417,12 @@ async function start() {
 
         if (pathRx.payments.test(pathname)) {
           if (method === "GET") { const r = await api.listPayments(query); return okResponse(res, r); }
-          if (method === "POST") { const r = await api.createPayment(body, user); return r.error ? errResponse(res, 400, r.error.code, r.error.message) : okResponse(res, r); }
+          if (method === "POST") {
+            try {
+              const r = await api.createPayment(body, user);
+              return r.error ? errResponse(res, 400, r.error.code, r.error.message) : okResponse(res, r);
+            } catch (e) { return errResponse(res, 400, "payment_error", e.message); }
+          }
         }
 
         if (pathRx.paymentAction.test(pathname)) {

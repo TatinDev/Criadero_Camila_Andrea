@@ -78,6 +78,7 @@ model AdminInvitation {
   token       String   @unique
   status      String   @default("pending")
   expiresAt   DateTime @map("expires_at")
+  role        String?
   usedAt      DateTime? @map("used_at")
   createdById String?  @map("created_by")
   createdBy   User?    @relation("createdByRelation", fields: [createdById], references: [id])
@@ -439,6 +440,7 @@ model HealthTreatment {
   description     String
   performedBy     String?  @map("performed_by")
   notes           String?
+  receiptReference String? @map("receipt_reference")
   statusId        String   @map("status_id")
   status          String   @default("active")
   createdAt       DateTime @default(now()) @map("created_at")
@@ -449,6 +451,7 @@ model HealthTreatment {
 
 model Supply {
   id          String               @id @default(cuid())
+  code        String?  @unique
   name        String
   unit        String?
   description String?

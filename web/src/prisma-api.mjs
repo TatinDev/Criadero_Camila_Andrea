@@ -256,7 +256,7 @@ export class PrismaApi {
   async createInvitation({ email, role, expiresAt }, createdBy) {
     const token = generateInviteCode();
     const inv = await this.db.adminInvitation.create({
-      data: { email: email.toLowerCase().trim(), token, status: "pending", expiresAt: new Date(expiresAt), createdById: createdBy.userId },
+      data: { email: email.toLowerCase().trim(), token, role, status: "pending", expiresAt: new Date(expiresAt), createdById: createdBy.userId },
     });
     await this.db.auditLog.create({ data: auditPayload(createdBy, "create_invitation", "security", inv.id, "high", "security") });
     return inv;

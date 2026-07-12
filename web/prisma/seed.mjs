@@ -129,6 +129,6 @@ async function main() {
 }
 
 main().catch((e) => {
-  console.error(e);
-  process.exit(1);
+  if (e.code === "P2002") { console.log("Seed ya ejecutado (duplicados ignorados)."); }
+  else { console.error(e); process.exit(1); }
 }).finally(() => prisma.$disconnect());

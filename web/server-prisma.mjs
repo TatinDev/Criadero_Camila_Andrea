@@ -312,6 +312,13 @@ async function start() {
             const r = await api.updateCatalogEntry(catName, entryId, body, user);
             return r.error ? errResponse(res, 400, r.error.code, r.error.message) : okResponse(res, r);
           }
+          if (method === "DELETE") {
+            const parts = rest.split("/");
+            const catName = parts[0];
+            const entryId = parts.slice(1).join("/");
+            const r = await api.deleteCatalogEntry(catName, entryId, user);
+            return r.error ? errResponse(res, 400, r.error.code, r.error.message) : okResponse(res, r);
+          }
         }
 
         if (pathRx.dashboard.test(pathname) && method === "GET") { const r = await api.dashboard(); return okResponse(res, r); }

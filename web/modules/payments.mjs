@@ -1,12 +1,12 @@
 import { api, uploadFile } from "../api.mjs";
 import { escapeHtml, statusLabel, statusClass, toast, modal, formFieldsHtml, money, dateLocale } from "../components/ui.mjs";
 
-let payments = [], stays = [], filters = { stayId: "", status: "all" };
+let payments = [], stays = [], paymentMethods = [], filters = { stayId: "", status: "all" };
 
 const formFields = [
   { name: "boardingStayId", label: "Pension", type: "relation", required: true },
   { name: "paymentDate", label: "Fecha pago", type: "date", required: true },
-  { name: "paymentMethod", label: "Medio", type: "select", options: [{ value: "cash", label: "Efectivo" }, { value: "transfer", label: "Transferencia" }], required: true },
+  { name: "paymentMethod", label: "Medio", type: "select", options: [], required: true },
   { name: "amount", label: "Monto pagado", type: "money", min: 0, required: true },
   { name: "observations", label: "Observaciones", type: "textarea", full: true },
 ];
@@ -48,6 +48,10 @@ export async function render() {
   payments = Array.isArray(pRes) ? pRes : [];
   const sRes = await api("GET", "/api/v1/boarding-stays");
   stays = Array.isArray(sRes) ? sRes : [];
+
+  const pmRes = await api("GET", "/api/v1/catalogs/payment-methods");
+  paymentMethods = Array.isArray(pmRes) ? pmRes : [];
+  formFields.find((f) => f.name === "paymentMethod").options = paymentMethods.map((pm) => ({ value: pm.code || pm.name, label: pm.name || pm.code }));
 
   const filtered = payments
     .filter((p) => !filters.stayId || p.boardingStayId === filters.stayId)

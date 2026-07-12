@@ -213,6 +213,29 @@ export class PrismaApi {
     return r;
   }
 
+  async deleteCatalogEntry(name, id, user) {
+    const db = this.db;
+    const modelMap = {
+      "horse-colors": (i) => db.horseColor.delete({ where: { id: i } }),
+      "horse-sexes": (i) => db.horseSex.delete({ where: { id: i } }),
+      "horse-breeds": (i) => db.horseBreed.delete({ where: { id: i } }),
+      "boarding-types": (i) => db.boardingType.delete({ where: { id: i } }),
+      "agreement-statuses": (i) => db.agreementStatus.delete({ where: { id: i } }),
+      "payment-methods": (i) => db.paymentMethod.delete({ where: { id: i } }),
+      "client-statuses": (i) => db.clientStatus.delete({ where: { id: i } }),
+      "vaccination-statuses": (i) => db.vaccinationStatus.delete({ where: { id: i } }),
+      "farrier-record-statuses": (i) => db.farrierRecordStatus.delete({ where: { id: i } }),
+      "importance-levels": (i) => db.importanceLevel.delete({ where: { id: i } }),
+      "event-types": (i) => db.eventType.delete({ where: { id: i } }),
+      "supplies": (i) => db.supply.delete({ where: { id: i } }),
+    };
+    const fn = modelMap[name];
+    if (!fn) return { error: { code: "validation_error", message: "Catalogo no soportado para eliminar." } };
+    const r = await fn(id);
+    await db.auditLog.create({ data: auditPayload(user, "delete", name, id, "medium", "system") });
+    return r;
+  }
+
   async listUsers() {
     const users = await this.db.user.findMany({ include: { role: true }, orderBy: { firstName: "asc" } });
     return users.map((u) => ({ ...u, role: u.role?.code || u.role }));

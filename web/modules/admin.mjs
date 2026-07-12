@@ -1,13 +1,15 @@
 import { api } from "../api.mjs";
 import { escapeHtml, statusLabel, statusClass, toast, modal, formFieldsHtml } from "../components/ui.mjs";
 
-let users = [], invitations = [];
+let users = [], invitations = [], roles = [];
 
 export async function render() {
   const uRes = await api("GET", "/api/v1/users");
   users = Array.isArray(uRes) ? uRes : [];
   const iRes = await api("GET", "/api/v1/admin-invitations");
   invitations = Array.isArray(iRes) ? iRes : [];
+  const rRes = await api("GET", "/api/v1/catalogs/user-roles");
+  roles = Array.isArray(rRes) ? rRes : [];
 
   const activeUsers = users.filter((u) => u.status === "active");
   const inactiveUsers = users.filter((u) => u.status !== "active");
@@ -103,8 +105,7 @@ function showInviteModal() {
     <label class="full">Correo <span class="req">*</span> <input name="email" type="email" required></label>
     <label class="full">Rol <span class="req">*</span>
       <select name="role" style="width:100%;padding:8px 12px;border:1.5px solid var(--border-2);border-radius:11px;background:var(--surface-2);font-size:14px;">
-        <option value="admin">Administrador</option>
-        <option value="owner">Propietario</option>
+        ${roles.map((r) => `<option value="${r.code}">${r.name}</option>`).join("")}
       </select>
     </label>
     <label class="full">Expira <span class="req">*</span> <input name="expiresAt" type="date" value="${expiresAt}" required></label>

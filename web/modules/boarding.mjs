@@ -1,26 +1,15 @@
 import { api } from "../api.mjs";
 import { escapeHtml, statusLabel, statusClass, toast, modal, formFieldsHtml, money, dateLocale } from "../components/ui.mjs";
 
-let stays = [], horses = [], clients = [], boardingFilter = "";
+let stays = [], horses = [], clients = [], boardingFilter = "", boardingTypes = [], agreementStatuses = [];
 
 const fields = [
   { name: "horseId", label: "Caballo", type: "relation", required: true },
   { name: "clientId", label: "Cliente dueño", type: "relation", required: true },
   { name: "startDate", label: "Fecha inicio", type: "date", required: true },
   { name: "estimatedExitDate", label: "Salida estimada", type: "date" },
-  { name: "boardingType", label: "Tipo pension", type: "select", options: [
-    { value: "client_supplies", label: "Insumos aportados por cliente" },
-    { value: "included_supplies", label: "Insumos incluidos por criadero" },
-    { value: "mixed", label: "Mixta" },
-    { value: "other", label: "Otro" },
-  ], required: true },
-  { name: "agreementStatus", label: "Estado acuerdo", type: "select", options: [
-    { value: "active", label: "Activo" },
-    { value: "payment_pending", label: "Pendiente de pago" },
-    { value: "debt", label: "Con deuda" },
-    { value: "finished", label: "Finalizado" },
-    { value: "cancelled", label: "Cancelado" },
-  ], required: true },
+  { name: "boardingType", label: "Tipo pension", type: "select", options: [], required: true },
+  { name: "agreementStatus", label: "Estado acuerdo", type: "select", options: [], required: true },
   { name: "boardingCost", label: "Costo pension", type: "money", min: 0, required: true },
   { name: "hayBalesPerMonth", label: "Fardos/mes", type: "number", min: 0 },
   { name: "oatsPerMonth", label: "Avena/mes", type: "number", min: 0 },
@@ -40,6 +29,14 @@ export async function render() {
   horses = Array.isArray(hRes) ? hRes : [];
   const cRes = await api("GET", "/api/v1/clients");
   clients = Array.isArray(cRes) ? cRes : [];
+
+  const btRes = await api("GET", "/api/v1/catalogs/boarding-types");
+  boardingTypes = Array.isArray(btRes) ? btRes : [];
+  fields.find((f) => f.name === "boardingType").options = boardingTypes.map((bt) => ({ value: bt.code || bt.name, label: bt.name || bt.code }));
+
+  const asRes = await api("GET", "/api/v1/catalogs/agreement-statuses");
+  agreementStatuses = Array.isArray(asRes) ? asRes : [];
+  fields.find((f) => f.name === "agreementStatus").options = agreementStatuses.map((as) => ({ value: as.code || as.name, label: as.name || as.code }));
 
   const filtered = stays
     .filter((s) => !boardingFilter || s.horseId === boardingFilter)

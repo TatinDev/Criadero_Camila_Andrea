@@ -43,7 +43,10 @@ export async function render() {
           <tbody>${entries.map((e) => `
             <tr>
               ${cols.map((c) => `<td>${escapeHtml(String(e[c] ?? ""))}</td>`).join("")}
-              <td><button class="btn ghost small" data-edit-catalog="${e.id}">Editar</button></td>
+              <td>
+                <button class="btn ghost small" data-edit-catalog="${e.id}">Editar</button>
+                <button class="btn ghost small" data-delete-catalog="${e.id}" style="color:var(--danger);">Eliminar</button>
+              </td>
             </tr>`).join("")}</tbody>
         </table>
         ${entries.length === 0 ? `<div style="text-align:center;padding:16px;color:var(--text-2);">Sin registros en este catalogo.</div>` : ""}
@@ -56,6 +59,7 @@ export function bind() {
   document.getElementById("catalog-selector")?.addEventListener("change", (e) => { selectedCatalog = e.target.value; refresh(); });
   document.getElementById("btn-new-catalog-entry")?.addEventListener("click", () => showCreate());
   document.querySelectorAll("[data-edit-catalog]").forEach((b) => b.addEventListener("click", () => showEdit(b.dataset.editCatalog)));
+  document.querySelectorAll("[data-delete-catalog]").forEach((b) => b.addEventListener("click", () => confirmDelete(b.dataset.deleteCatalog)));
 }
 
 async function refresh() { document.getElementById("view-container").innerHTML = await render(); bind(); }
@@ -90,4 +94,15 @@ function showEdit(id) {
     if (res && !res.error) { toast("Registro actualizado", true); refresh(); }
     else toast(res?.error?.message || "Error");
   }, "Guardar", "bi-pencil", "", fields);
+}
+
+function confirmDelete(id) {
+  const e = entries.find((item) => item.id === id);
+  if (!e) return;
+  const name = e.name || e.code || e.id;
+  modal("Eliminar registro", `<p>¿Eliminar <strong>${escapeHtml(name)}</strong>?</p><p style="font-size:13px;color:var(--text-2);">Esta accion no se puede deshacer.</p>`, async () => {
+    const res = await api("DELETE", `/api/v1/catalogs/${selectedCatalog}/${id}`);
+    if (res && !res.error) { toast("Registro eliminado", true); refresh(); }
+    else toast(res?.error?.message || "Error al eliminar");
+  }, "Eliminar", "bi-trash");
 }

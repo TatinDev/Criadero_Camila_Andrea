@@ -1,0 +1,230 @@
+{
+  "artifact_check": {
+    "blocking_findings": 0,
+    "missing": [],
+    "required": [
+      "work_order.json",
+      "constitution.md",
+      "spec.md",
+      "clarifications.md",
+      "checklist.md",
+      "context-pack.json",
+      "plan.md",
+      "tasks.md",
+      "analyze-report.md",
+      "implementation-report.md",
+      "factory-skill-manifest.json",
+      "factory-tool-manifest.json",
+      "frontend-template-policy.md",
+      "frontend-template-manifest.json",
+      "project-isolation-policy.md",
+      "project-manifest.json",
+      "project-memory-policy.json",
+      "project-sandboxes.json",
+      "dev-materialization-manifest.json"
+    ]
+  },
+  "coverage_gate": "principle_coverage_100_percent",
+  "dev_materialization": {
+    "manifest": "dev-materialization-manifest.json",
+    "status": "pass"
+  },
+  "factory_skills": {
+    "errors": [],
+    "status": "pass"
+  },
+  "frontend_template": {
+    "errors": [],
+    "status": "pass"
+  },
+  "project_isolation": {
+    "errors": [],
+    "status": "pass"
+  },
+  "static_policy": {
+    "blocking_findings": 0,
+    "findings": []
+  },
+  "status": "pass",
+  "tests": {
+    "frontend_lint": {
+      "blocking_findings": 0,
+      "findings": [
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "74",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:34px;height:34px;flex-shrink:0;border-radius:10px;background:linear"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "98",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"flex-shrink:0;min-width:19px;height:19px;padding:0 5px;border-radius:10px"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "109",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:36px;height:36px;flex-shrink:0;border-radius:50%;background:var(--b"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "165",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:40px;height:40px;border-radius:50%;background:var(--accent);color:#"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "176",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "184",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"position:relative;display:inline-flex;align-items:center;gap:9px;backgrou"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "268",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:19px;height:19px;flex-shrink:0;border-radius:6px;border:2px solid {"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "283",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:40px;height:40px;border-radius:50%;display:flex;align-items:center;"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "309",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"position:absolute;top:16px;left:16px;background:var(--brand);color:#fff;f"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "344",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"display:inline-flex;align-items:center;gap:7px;background:var(--brand);co"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "387",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"display:inline-flex;align-items:center;gap:7px;background:var(--brand);co"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "406",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:28px;height:28px;border-radius:50%;background:{{ card.aColor }};col"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "428",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"display:inline-flex;align-items:center;gap:7px;background:var(--brand);co"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "469",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:24px;height:24px;border-radius:50%;background:{{ file.ownerColor }}"
+        },
+        {
+          "detail": "Hex color in style attribute; use var(--token) instead",
+          "line": "541",
+          "rule": "no_hex_colors",
+          "snippet": "style=\"width:62px;height:62px;border-radius:50%;background:{{ p.color }};color:#"
+        },
+        {
+          "detail": "Handler 'goSolicitudes' used in template but not found as method in Component class",
+          "line": "184",
+          "rule": "undefined_handler"
+        },
+        {
+          "detail": "Handler 'goDocumentos' used in template but not found as method in Component class",
+          "line": "222",
+          "rule": "undefined_handler"
+        },
+        {
+          "detail": "Handler 'goCalendario' used in template but not found as method in Component class",
+          "line": "245",
+          "rule": "undefined_handler"
+        },
+        {
+          "detail": "Handler 'setGrid' used in template but not found as method in Component class",
+          "line": "424",
+          "rule": "undefined_handler"
+        },
+        {
+          "detail": "Handler 'setList' used in template but not found as method in Component class",
+          "line": "425",
+          "rule": "undefined_handler"
+        }
+      ],
+      "rules_checked": [
+        "no_hex_colors",
+        "undefined_css_token",
+        "undefined_handler",
+        "missing_hint_placeholder_count",
+        "missing_hint_placeholder_val"
+      ],
+      "total_findings": 20,
+      "warnings": 20
+    },
+    "frontend_smoke": {
+      "blocking_findings": 0,
+      "checks": {
+        "console_errors": {
+          "detail": "No console errors",
+          "errors": [],
+          "status": "pass"
+        },
+        "dc_compilation": {
+          "detail": "No DC compilation errors",
+          "status": "pass"
+        },
+        "navigation": {
+          "items": [],
+          "status": "pass"
+        },
+        "nueva_solicitud_button": {
+          "detail": "Button not found",
+          "status": "skipped"
+        },
+        "sidebar_rendered": {
+          "detail": "Sidebar rendered",
+          "status": "pass"
+        },
+        "theme_toggle": {
+          "detail": "No theme toggle button found",
+          "status": "skipped"
+        }
+      },
+      "errors": [],
+      "failed_checks": 0,
+      "passed_checks": 4,
+      "status": "pass",
+      "total_checks": 6
+    },
+    "frontend_structure": {
+      "blocking_findings": 0,
+      "findings": [],
+      "modules_checked": [
+        "isInicio",
+        "isNoticias",
+        "isCalendario",
+        "isTareas",
+        "isDocumentos",
+        "isSolicitudes",
+        "isDirectorio",
+        "isReportes"
+      ]
+    },
+    "status": "pass"
+  }
+}

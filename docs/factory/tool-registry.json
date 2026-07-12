@@ -1,0 +1,69 @@
+{
+  "default": "deny_unregistered_tools",
+  "tools": [
+    {
+      "gate": "sandbox",
+      "purpose": "DEV sandbox bundle materialization through P12/INV isolation API",
+      "timeout_seconds": 30,
+      "tool_id": "tool.sandbox.dev_materialize",
+      "writes": true
+    },
+    {
+      "gate": "secrets",
+      "purpose": "Secret scan",
+      "timeout_seconds": 30,
+      "tool_id": "tool.security.secrets",
+      "writes": true
+    },
+    {
+      "gate": "dependency",
+      "purpose": "Dependency manifest scan",
+      "timeout_seconds": 30,
+      "tool_id": "tool.security.deps",
+      "writes": true
+    },
+    {
+      "gate": "sbom",
+      "purpose": "SBOM generation",
+      "timeout_seconds": 30,
+      "tool_id": "tool.sbom.generate",
+      "writes": true
+    },
+    {
+      "gate": "policy",
+      "purpose": "Static policy scan",
+      "timeout_seconds": 30,
+      "tool_id": "tool.policy.static",
+      "writes": true
+    },
+    {
+      "gate": "final_format",
+      "purpose": "Artifact completeness",
+      "timeout_seconds": 30,
+      "tool_id": "tool.validation.artifacts",
+      "writes": true
+    },
+    {
+      "gate": "frontend_lint",
+      "purpose": "Static DC template linting: hex colors, CSS tokens, handlers, hint attributes",
+      "timeout_seconds": 30,
+      "tool_id": "tool.frontend.lint",
+      "writes": true
+    },
+    {
+      "gate": "frontend_structure",
+      "purpose": "DC template structure validation: modules, navigation, renderVals() completeness",
+      "timeout_seconds": 30,
+      "tool_id": "tool.frontend.structure",
+      "writes": true
+    },
+    {
+      "gate": "tests",
+      "purpose": "Playwright smoke test: render, navigate, toggle theme, check console errors",
+      "timeout_seconds": 60,
+      "tool_id": "tool.frontend.smoke",
+      "writes": false
+    }
+  ],
+  "version": "toolreg.webforge.v1"
+}

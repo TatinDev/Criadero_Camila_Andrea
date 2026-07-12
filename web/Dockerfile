@@ -9,7 +9,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
 COPY prisma/ ./prisma/
-COPY prisma.config.mjs ./
+COPY prisma.config.js ./
 RUN npx prisma generate
 
 COPY server.mjs server-prisma.mjs ./

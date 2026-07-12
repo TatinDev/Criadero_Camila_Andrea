@@ -1,5 +1,7 @@
-import { defineConfig, env } from "@prisma/config"
+import { defineConfig } from "@prisma/config"
 
 export default defineConfig({
-  datasourceUrl: env("DATABASE_URL"),
+  datasource: {
+    url: process.env.DATABASE_URL,
+  },
 })
